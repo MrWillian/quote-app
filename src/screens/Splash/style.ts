@@ -19,3 +19,5 @@ export const Title = styled.Text`
   text-transform: uppercase;
   letter-spacing: 5px;
 `;
+
+export const Loading = styled.ActivityIndicator``;
