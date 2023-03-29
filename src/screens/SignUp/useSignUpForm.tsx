@@ -19,7 +19,7 @@ let schema = object().shape({
   password: string()
     .required('A senha é obrigatória')
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#.\$%\^&\*])(?=.{8,})/,
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#.$%\^&*])(?=.{8,})/,
       'A senha deverá conter pelo menos 8 caracteres',
     ),
   confirmPassword: string().oneOf([ref('password')], 'As senhas não conferem!'),
