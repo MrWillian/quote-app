@@ -18,5 +18,10 @@ export const Title = styled.Text`
 export const Form = styled.SafeAreaView`
   display: flex;
   margin-top: 20px;
-  gap: 4px;
+  gap: 20px;
+`;
+
+export const Inputs = styled.View`
+  display: flex;
+  gap: 5px;
 `;
