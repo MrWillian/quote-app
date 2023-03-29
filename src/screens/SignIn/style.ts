@@ -13,6 +13,7 @@ export const Title = styled.Text`
   font-size: 24px;
   text-transform: uppercase;
   letter-spacing: 8px;
+  text-align: center;
 `;
 
 export const Form = styled.SafeAreaView`
