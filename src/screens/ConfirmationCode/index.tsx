@@ -2,7 +2,17 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Button, QuoteLogo} from '../../components';
 import NextTextInput from 'react-native-next-input';
-import {Container, EmailLabel, Form, Subtitle, Title} from './style';
+import {
+  Container,
+  EmailLabel,
+  Form,
+  ResendContainer,
+  ResendLabel,
+  ResendLinkText,
+  ResendLinkContainer,
+  Subtitle,
+  Title,
+} from './style';
 
 export const ConfirmationCode = () => {
   const handleChange = (value: string) => console.log(value);
@@ -20,6 +30,12 @@ export const ConfirmationCode = () => {
           parentViewStyle={styles.parentInputStyle}
           onChangeValue={(_, value) => handleChange(value)}
         />
+        <ResendContainer>
+          <ResendLabel>You do not receive?</ResendLabel>
+          <ResendLinkContainer>
+            <ResendLinkText>Resend</ResendLinkText>
+          </ResendLinkContainer>
+        </ResendContainer>
         <Button label="Verify" />
       </Form>
     </Container>
