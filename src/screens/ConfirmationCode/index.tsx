@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Button, QuoteLogo} from '../../components';
 import NextTextInput from 'react-native-next-input';
-import {Container, EmailLabel, Form, Inputs, Subtitle, Title} from './style';
+import {Container, EmailLabel, Form, Subtitle, Title} from './style';
 
 export const ConfirmationCode = () => {
   const handleChange = (value: string) => console.log(value);
@@ -14,14 +14,12 @@ export const ConfirmationCode = () => {
       <Subtitle>We Send a Email To</Subtitle>
       <EmailLabel>client@quote.com</EmailLabel>
       <Form>
-        <Inputs>
-          <NextTextInput
-            noOfTextInput={6}
-            textInputStyle={styles.inputStyle}
-            parentViewStyle={styles.parentInputStyle}
-            onChangeValue={(_, value) => handleChange(value)}
-          />
-        </Inputs>
+        <NextTextInput
+          noOfTextInput={6}
+          textInputStyle={styles.inputStyle}
+          parentViewStyle={styles.parentInputStyle}
+          onChangeValue={(_, value) => handleChange(value)}
+        />
         <Button label="Verify" />
       </Form>
     </Container>

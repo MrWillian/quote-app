@@ -39,11 +39,3 @@ export const Form = styled.SafeAreaView`
   margin-top: 20px;
   gap: 20px;
 `;
-
-export const Inputs = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-`;
