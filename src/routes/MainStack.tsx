@@ -6,6 +6,7 @@ import {
 import {
   ConfirmationCode,
   Dashboard,
+  DetailQuote,
   RegisterQuote,
   SignIn,
   SignUp,
@@ -21,6 +22,7 @@ type MainStackParamList = {
   ConfirmationCode: undefined;
   Dashboard: undefined;
   RegisterQuote: undefined;
+  DetailQuote: undefined;
 };
 
 export type mainScreenProp = NativeStackNavigationProp<MainStackParamList>;
@@ -37,6 +39,7 @@ const MainStackNavigator = () => (
     <Stack.Screen name="ConfirmationCode" component={ConfirmationCode} />
     <Stack.Screen name="Dashboard" component={Dashboard} />
     <Stack.Screen name="RegisterQuote" component={RegisterQuote} />
+    <Stack.Screen name="DetailQuote" component={DetailQuote} />
   </Stack.Navigator>
 );
 
