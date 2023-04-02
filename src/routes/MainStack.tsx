@@ -3,7 +3,14 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationProp,
 } from '@react-navigation/native-stack';
-import {ConfirmationCode, Dashboard, SignIn, SignUp, Splash} from '../screens';
+import {
+  ConfirmationCode,
+  Dashboard,
+  RegisterQuote,
+  SignIn,
+  SignUp,
+  Splash,
+} from '../screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -13,6 +20,7 @@ type MainStackParamList = {
   SignUp: undefined;
   ConfirmationCode: undefined;
   Dashboard: undefined;
+  RegisterQuote: undefined;
 };
 
 export type mainScreenProp = NativeStackNavigationProp<MainStackParamList>;
@@ -28,6 +36,7 @@ const MainStackNavigator = () => (
     <Stack.Screen name="SignUp" component={SignUp} />
     <Stack.Screen name="ConfirmationCode" component={ConfirmationCode} />
     <Stack.Screen name="Dashboard" component={Dashboard} />
+    <Stack.Screen name="RegisterQuote" component={RegisterQuote} />
   </Stack.Navigator>
 );
 
