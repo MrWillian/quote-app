@@ -1,8 +1,31 @@
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {Splash} from '../screens/Splash';
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
+import {
+  ConfirmationCode,
+  Dashboard,
+  DetailQuote,
+  RegisterQuote,
+  SignIn,
+  SignUp,
+  Splash,
+} from '../screens';
 
 const Stack = createNativeStackNavigator();
+
+type MainStackParamList = {
+  Splash: undefined;
+  SignIn: undefined;
+  SignUp: undefined;
+  ConfirmationCode: undefined;
+  Dashboard: undefined;
+  RegisterQuote: undefined;
+  DetailQuote: undefined;
+};
+
+export type mainScreenProp = NativeStackNavigationProp<MainStackParamList>;
 
 const MainStackNavigator = () => (
   <Stack.Navigator
@@ -11,6 +34,12 @@ const MainStackNavigator = () => (
     }}
   >
     <Stack.Screen name="Splash" component={Splash} />
+    <Stack.Screen name="SignIn" component={SignIn} />
+    <Stack.Screen name="SignUp" component={SignUp} />
+    <Stack.Screen name="ConfirmationCode" component={ConfirmationCode} />
+    <Stack.Screen name="Dashboard" component={Dashboard} />
+    <Stack.Screen name="RegisterQuote" component={RegisterQuote} />
+    <Stack.Screen name="DetailQuote" component={DetailQuote} />
   </Stack.Navigator>
 );
 

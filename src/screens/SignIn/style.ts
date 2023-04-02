@@ -8,11 +8,21 @@ export const Container = styled.View`
 `;
 
 export const Title = styled.Text`
-  color: #5c5091;
+  color: #fff;
   font-weight: bold;
   font-size: 24px;
   text-transform: uppercase;
-  letter-spacing: 5px;
+  letter-spacing: 8px;
+  text-align: center;
 `;
 
-export const Loading = styled.ActivityIndicator``;
+export const Form = styled.SafeAreaView`
+  display: flex;
+  margin-top: 20px;
+  gap: 20px;
+`;
+
+export const Inputs = styled.View`
+  display: flex;
+  gap: 5px;
+`;
