@@ -13,7 +13,7 @@ workflows:
                 FCI_KEY_ALIAS : $FCI_KEY_ALIAS
             node: latest
         scripts:
-            - npm install
+            - npm install --legacy-peer-deps
             - echo "sdk.dir=$HOME/programs/android-sdk-macosx" > "$FCI_BUILD_DIR/android/local.properties"
             - |
                 chmod -R 777 $FCI_BUILD_DIR 
