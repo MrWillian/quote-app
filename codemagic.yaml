@@ -16,6 +16,8 @@ workflows:
             - npm install
             - echo "sdk.dir=$HOME/programs/android-sdk-macosx" > "$FCI_BUILD_DIR/android/local.properties"
             - |
+                chmod -R 777 $FCI_BUILD_DIR 
+                echo $CM_KEYSTORE | base64 --decode > $FCI_BUILD_DIR/keystore.jks 
                 # build Android
                 cd android
                 ./gradlew assembleDebug
