@@ -50,6 +50,9 @@
     "setupFiles": ["./jestSetupFile.ts"],
     "transformIgnorePatterns": [
       "node_modules/(?!((jest-)?@?react-native|react-navigation|@react-navigation/.*))"
-    ]
+    ],
+    "moduleNameMapper": {
+      "amazon-cognito-identity-js": "<rootDir>/__mocks__/amazon-cognito-identity-js/index.js"
+    }
   }
 }
