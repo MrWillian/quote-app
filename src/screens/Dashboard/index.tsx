@@ -20,7 +20,7 @@ export const Dashboard = () => {
 
       <RegisterContainer>
         <RegisterLabel>Register Before You Forget! ;)</RegisterLabel>
-        <Button label="Register" />
+        <Button title="Register" />
       </RegisterContainer>
     </Container>
   );
