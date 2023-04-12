@@ -12,7 +12,7 @@ export const SignIn = () => {
     register,
     setValue,
     handleSubmit,
-    formState: {errors},
+    formState: {isSubmitting, errors},
   } = useSignInForm();
   const {signIn} = useAuth();
   const navigation = useNavigation<mainScreenProp>();
@@ -53,7 +53,11 @@ export const SignIn = () => {
             onChangeText={text => setValue('password', text)}
           />
         </Inputs>
-        <Button onPress={handleSubmit(onSubmit)} title="Sign In" />
+        <Button
+          onPress={handleSubmit(onSubmit)}
+          title="Sign In"
+          isSubmitting={isSubmitting}
+        />
       </Form>
     </Container>
   );
