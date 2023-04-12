@@ -19,6 +19,8 @@ export const Dashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const redirectToRegisterQuote = () => navigation.navigate('RegisterQuote');
+
   const handleToken = async () => {
     const token = await AsyncStorage.getItem('REFRESH_TOKEN');
     if (!token) {
@@ -34,7 +36,7 @@ export const Dashboard = () => {
       <QuoteList />
       <RegisterContainer>
         <RegisterLabel>Register Before You Forget! ;)</RegisterLabel>
-        <Button title="Register" />
+        <Button title="Register" onPress={redirectToRegisterQuote} />
       </RegisterContainer>
     </Container>
   );
