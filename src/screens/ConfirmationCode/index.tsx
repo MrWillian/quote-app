@@ -13,16 +13,18 @@ import {
   Subtitle,
   Title,
 } from './style';
+import useAuth from '../../hooks/useAuth';
 
 export const ConfirmationCode = () => {
   const handleChange = (value: string) => console.log(value);
+  const {unverifiedAccount} = useAuth();
 
   return (
     <Container>
       <QuoteLogo />
       <Title>Please, check your email!!</Title>
       <Subtitle>We Send a Email To</Subtitle>
-      <EmailLabel>client@quote.com</EmailLabel>
+      <EmailLabel>{unverifiedAccount.email}</EmailLabel>
       <Form>
         <NextTextInput
           noOfTextInput={6}
@@ -36,7 +38,7 @@ export const ConfirmationCode = () => {
             <ResendLinkText>Resend</ResendLinkText>
           </ResendLinkContainer>
         </ResendContainer>
-        <Button label="Verify" />
+        <Button title="Verify" />
       </Form>
     </Container>
   );
