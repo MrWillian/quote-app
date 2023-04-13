@@ -3,7 +3,7 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {object, ref, string} from 'yup';
 
 export type UserSignUpProps = {
-  name: string;
+  givenName: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -20,7 +20,10 @@ let schema = object().shape({
     .required('A senha é obrigatória')
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#.$%^&*])(?=.{8,})/,
-      'A senha deverá conter pelo menos 8 caracteres',
+      `The password is required and must contain at least 8 characters: 
+      * a number
+      * a special character (!@#$%^&.*)
+      * a uppercase latter and a lowercase latter`,
     ),
   confirmPassword: string().oneOf([ref('password')], 'As senhas não conferem!'),
 });
@@ -30,7 +33,7 @@ export const useSignUpForm = () =>
     mode: 'all',
     resolver: yupResolver(schema),
     defaultValues: {
-      name: '',
+      givenName: '',
       email: '',
       password: '',
       confirmPassword: '',
