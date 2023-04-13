@@ -1,22 +1,52 @@
 import React, {useEffect} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {Button, QuoteLogo, TextInput} from '../../components';
 import {Container, Form, Inputs, Title} from './style';
 import {useSignUpForm} from './useSignUpForm';
+import useAuth from '../../hooks/useAuth';
+import {Alert} from 'react-native';
+import {mainScreenProp} from '../../routes/MainStack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const SignUp = () => {
   const {
     register,
     setValue,
     handleSubmit,
-    formState: {errors},
+    formState: {isSubmitting, errors},
   } = useSignUpForm();
+  const {signUp} = useAuth();
+  const navigation = useNavigation<mainScreenProp>();
 
   useEffect(() => {
+    handleUnverifiedAccount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    register('givenName');
     register('email');
     register('password');
+    register('confirmPassword');
   }, [register]);
 
-  const onSubmit = (data: any) => console.log(data);
+  const handleUnverifiedAccount = async () => {
+    const emailAccount = await AsyncStorage.getItem('UNVERIFIED_ACCOUNT_EMAIL');
+    if (emailAccount) {
+      navigation.navigate('ConfirmationCode');
+    }
+  };
+
+  const onSubmit = async (data: any) => {
+    await signUp(data)
+      .then(response => {
+        Alert.alert('Success', response.message);
+        navigation.navigate('ConfirmationCode');
+      })
+      .catch(error => {
+        Alert.alert('Error', error.message);
+      });
+  };
 
   return (
     <Container>
@@ -25,15 +55,17 @@ export const SignUp = () => {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Inputs>
           <TextInput
-            id="name"
+            id="givenName"
             label="Name"
-            error={errors?.name}
-            onChangeText={text => setValue('name', text)}
+            error={errors?.givenName}
+            showErrorMessage={true}
+            onChangeText={text => setValue('givenName', text)}
           />
           <TextInput
             id="email"
             label="Email"
             error={errors?.email}
+            showErrorMessage={true}
             onChangeText={text => setValue('email', text)}
           />
           <TextInput
@@ -41,6 +73,7 @@ export const SignUp = () => {
             label="Password"
             secureTextEntry={true}
             error={errors?.password}
+            showErrorMessage={true}
             onChangeText={text => setValue('password', text)}
           />
           <TextInput
@@ -48,10 +81,15 @@ export const SignUp = () => {
             label="Confirm Password"
             secureTextEntry={true}
             error={errors?.confirmPassword}
+            showErrorMessage={true}
             onChangeText={text => setValue('confirmPassword', text)}
           />
         </Inputs>
-        <Button label="Sign Up" />
+        <Button
+          title="Sign Up"
+          onPress={handleSubmit(onSubmit)}
+          isSubmitting={isSubmitting}
+        />
       </Form>
     </Container>
   );
