@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import {Link, useNavigation} from '@react-navigation/native';
 import {Button, QuoteLogo, TextInput} from '../../components';
 import {Container, Form, Inputs, Title} from './style';
 import {useSignInForm} from './useSignInForm';
@@ -53,6 +53,16 @@ export const SignIn = () => {
             onChangeText={text => setValue('password', text)}
           />
         </Inputs>
+        <Link
+          // eslint-disable-next-line react-native/no-inline-styles
+          style={{
+            color: 'white',
+            textDecorationLine: 'underline',
+          }}
+          to="/SignUp"
+        >
+          Need an account?
+        </Link>
         <Button
           onPress={handleSubmit(onSubmit)}
           title="Sign In"
