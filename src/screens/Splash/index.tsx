@@ -4,15 +4,28 @@ import {QuoteLogo} from '../../components';
 import {mainScreenProp} from '../../routes/MainStack';
 import FadeInView from './FadeInView';
 import {Container, Title, Loading} from './style';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const Splash = () => {
   const navigation = useNavigation<mainScreenProp>();
 
   useEffect(() => {
-    setTimeout(() => {
-      navigation.navigate('SignIn');
-    }, 6000);
-  }, [navigation]);
+    getUnverifiedAccount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getUnverifiedAccount = async () => {
+    return new Promise(async () => {
+      const unverifiedAccountEmail = await AsyncStorage.getItem(
+        'UNVERIFIED_ACCOUNT_EMAIL',
+      );
+      if (unverifiedAccountEmail) {
+        setTimeout(() => navigation.navigate('ConfirmationCode'), 2000);
+      } else {
+        setTimeout(() => navigation.navigate('SignIn'), 6000);
+      }
+    });
+  };
 
   return (
     <Container>
