@@ -10,21 +10,36 @@ export const Splash = () => {
   const navigation = useNavigation<mainScreenProp>();
 
   useEffect(() => {
-    getUnverifiedAccount();
+    handleInitialChecks();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleInitialChecks = async () => {
+    const token = await getRefreshToken();
+    if (token) {
+      setTimeout(() => navigation.navigate('Dashboard'), 3000);
+      return;
+    }
+    const unverifiedAccount = await getUnverifiedAccount();
+    if (unverifiedAccount) {
+      setTimeout(() => navigation.navigate('ConfirmationCode'), 2000);
+      return;
+    } else {
+      setTimeout(() => navigation.navigate('SignIn'), 6000);
+      return;
+    }
+  };
+
+  const getRefreshToken = async () => {
+    const token = await AsyncStorage.getItem('REFRESH_TOKEN');
+    return token;
+  };
+
   const getUnverifiedAccount = async () => {
-    return new Promise(async () => {
-      const unverifiedAccountEmail = await AsyncStorage.getItem(
-        'UNVERIFIED_ACCOUNT_EMAIL',
-      );
-      if (unverifiedAccountEmail) {
-        setTimeout(() => navigation.navigate('ConfirmationCode'), 2000);
-      } else {
-        setTimeout(() => navigation.navigate('SignIn'), 6000);
-      }
-    });
+    const unverifiedAccountEmail = await AsyncStorage.getItem(
+      'UNVERIFIED_ACCOUNT_EMAIL',
+    );
+    return unverifiedAccountEmail;
   };
 
   return (
