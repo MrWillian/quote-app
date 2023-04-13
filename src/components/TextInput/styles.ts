@@ -28,6 +28,5 @@ export const Input = styled.TextInput<ErrorProps>`
 export const ErrorLabel = styled.Text`
   color: red;
   font-weight: bold;
-  font-size: 14px;
-  letter-spacing: 2px;
+  font-size: 10px;
 `;
