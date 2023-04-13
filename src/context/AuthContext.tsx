@@ -7,48 +7,13 @@ import {
 } from 'amazon-cognito-identity-js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {cognitoPool as Pool} from '../utils/cognito-pool';
-
-export interface IAuthContextType {
-  user: any;
-  isAuthenticated: boolean;
-  unverifiedAccount: {email: string; password: string};
-  signIn: (p: {email: string; password: string}) => Promise<any>;
-  signOut: () => Promise<any>;
-  signUp: (p: {name: string; email: string; password: string}) => Promise<any>;
-  confirmAccount: (code: string) => Promise<any>;
-  resendConfirmationCode: () => Promise<any>;
-  getSessionToken: () => Promise<any>;
-  forgotPassword: (resetEmail: string) => void;
-}
-
-interface IAuthProviderProps {
-  children?: any;
-}
-
-export const AuthContext = React.createContext<IAuthContextType>({
-  user: null,
-  isAuthenticated: false,
-  unverifiedAccount: {
-    email: '',
-    password: '',
-  },
-  signIn: async () => {},
-  signOut: async () => {},
-  signUp: async () => {},
-  confirmAccount: async () => {},
-  resendConfirmationCode: async () => {},
-  getSessionToken: async () => {},
-  forgotPassword: async () => {},
-});
-
-type User = {
-  name?: string;
-  email?: string;
-  password?: string;
-};
-
-type SignInProps = {email: string; password: string};
-type SignUpProps = {name: string} & SignInProps;
+import {
+  AuthContext,
+  IAuthProviderProps,
+  SignInProps,
+  SignUpProps,
+  User,
+} from './types/auth';
 
 export const AuthProvider = ({children}: IAuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
