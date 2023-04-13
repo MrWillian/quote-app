@@ -17,7 +17,7 @@ export const TextInput = ({
 }: Props) => (
   <Container>
     <Label>{label}</Label>
-    <Input {...props} showBorder={showErrorMessage} />
+    <Input {...props} showBorder={error} />
     {showErrorMessage && !!error ? (
       <ErrorLabel>{error.message}</ErrorLabel>
     ) : (
