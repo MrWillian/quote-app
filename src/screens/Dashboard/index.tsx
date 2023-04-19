@@ -12,15 +12,15 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {mainScreenProp} from '../../routes/MainStack';
 import {getQuotesList} from '../../lib/quotes/listQuotes';
-import useAuth from '../../hooks/useAuth';
 import {Alert} from 'react-native';
 import useAuthenticatedUser from '../../hooks/useAuthenticatedUser';
+import useLogout from '../../hooks/useLogout';
 
 export const Dashboard = () => {
   const [quotes, setQuotes] = useState([]);
-  const {signOut} = useAuth();
   const navigation = useNavigation<mainScreenProp>();
   const [getAuthenticatedUser] = useAuthenticatedUser();
+  const [logout] = useLogout();
 
   useEffect(() => {
     handleToken();
@@ -30,12 +30,7 @@ export const Dashboard = () => {
 
   const redirectToRegisterQuote = () => navigation.navigate('RegisterQuote');
 
-  const handleLogout = async () => {
-    const successOnSignout = await signOut();
-    if (successOnSignout) {
-      return navigation.navigate('SignIn');
-    }
-  };
+  const handleLogout = () => logout();
 
   const handleToken = async () => {
     const token = await AsyncStorage.getItem('ACCESS_TOKEN');
