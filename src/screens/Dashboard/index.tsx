@@ -13,8 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {mainScreenProp} from '../../routes/MainStack';
 import {getQuotesList} from '../../lib/quotes/listQuotes';
 import {Alert} from 'react-native';
-import useAuthenticatedUser from '../../hooks/useAuthenticatedUser';
-import useLogout from '../../hooks/useLogout';
+import {useAuthenticatedUser, useLogout} from '../../hooks';
 
 export const Dashboard = () => {
   const [quotes, setQuotes] = useState([]);
