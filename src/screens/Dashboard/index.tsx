@@ -9,20 +9,18 @@ import {
   Title,
   Header,
 } from './style';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {mainScreenProp} from '../../routes/MainStack';
 import {getQuotesList} from '../../lib/quotes/listQuotes';
 import {Alert} from 'react-native';
-import {useAuthenticatedUser, useLogout} from '../../hooks';
+import {useCurrentUser, useLogout} from '../../hooks';
 
 export const Dashboard = () => {
   const [quotes, setQuotes] = useState([]);
   const navigation = useNavigation<mainScreenProp>();
-  const [getAuthenticatedUser] = useAuthenticatedUser();
+  const [currentUser] = useCurrentUser();
   const [logout] = useLogout();
 
   useEffect(() => {
-    handleToken();
     getQuotes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -31,21 +29,16 @@ export const Dashboard = () => {
 
   const handleLogout = () => logout();
 
-  const handleToken = async () => {
-    const token = await AsyncStorage.getItem('ACCESS_TOKEN');
-    if (!token) {
-      navigation.goBack();
-    }
-  };
-
   const getQuotes = async () => {
-    const username = getAuthenticatedUser()?.getUsername() ?? '';
+    const username = currentUser?.getUsername() ?? '';
     await getQuotesList(username)
       .then(result => {
-        setQuotes(result.data.Items);
+        if (result.data) {
+          setQuotes(result.data.Items);
+        }
       })
       .catch(error => {
-        Alert.alert('Error', error);
+        Alert.alert('Error', error.errorMessage);
       });
   };
 
