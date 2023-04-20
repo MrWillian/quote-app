@@ -1,7 +1,8 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import useAuth from './useAuth';
 import {useNavigation} from '@react-navigation/native';
 import {mainScreenProp} from '../routes/MainStack';
+import {removeData} from '../utils/storage';
+import {ACCESS_TOKEN} from '../utils/types';
 
 const useLogout = () => {
   const {signOut} = useAuth();
@@ -10,7 +11,7 @@ const useLogout = () => {
   const logout = async () => {
     const successOnSignout = await signOut();
     if (successOnSignout) {
-      await AsyncStorage.removeItem('ACCESS_TOKEN');
+      await removeData(ACCESS_TOKEN);
       return navigation.navigate('SignIn');
     }
   };
