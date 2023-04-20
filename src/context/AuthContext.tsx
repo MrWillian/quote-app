@@ -5,7 +5,6 @@ import {
   CognitoUserAttribute,
   CognitoUserSession,
 } from 'amazon-cognito-identity-js';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {cognitoPool as Pool} from '../utils/cognito-pool';
 import {
   AuthContext,
@@ -14,6 +13,13 @@ import {
   SignUpProps,
   User,
 } from './types/auth';
+import {
+  ACCESS_TOKEN,
+  UNVERIFIED_ACCOUNT_EMAIL,
+  removeData,
+  retrieveData,
+  storeData,
+} from '../utils';
 
 export const AuthProvider = ({children}: IAuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
@@ -38,7 +44,7 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
       cognitoUser.authenticateUser(authDetails, {
         onSuccess: async response => {
           const accessToken = response.getAccessToken().getJwtToken();
-          await AsyncStorage.setItem('ACCESS_TOKEN', accessToken);
+          await storeData(ACCESS_TOKEN, accessToken);
 
           resolve({
             type: 'success',
@@ -137,15 +143,15 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
   };
 
   const getUnverifiedAccount = async () => {
-    const email = await AsyncStorage.getItem('UNVERIFIED_ACCOUNT_EMAIL');
+    const email = await retrieveData(UNVERIFIED_ACCOUNT_EMAIL);
     return email;
   };
 
   const storeUnverifiedAccount = async (email: string) =>
-    await AsyncStorage.setItem('UNVERIFIED_ACCOUNT_EMAIL', email);
+    await storeData(UNVERIFIED_ACCOUNT_EMAIL, email);
 
   const clearUnverifiedAccountStore = async () =>
-    await AsyncStorage.setItem('UNVERIFIED_ACCOUNT_EMAIL', '');
+    await removeData(UNVERIFIED_ACCOUNT_EMAIL);
 
   const getSession = useCallback(
     async (currentUser = Pool.getCurrentUser()) => {
