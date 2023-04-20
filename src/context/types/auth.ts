@@ -10,7 +10,6 @@ export interface IAuthContextType {
   confirmAccount: (code: string) => Promise<any>;
   resendConfirmationCode: () => Promise<any>;
   getSession: () => Promise<any>;
-  getUserAttributeByName: (name: string) => Promise<any>;
   forgotPassword: (resetEmail: string) => void;
 }
 
@@ -31,7 +30,6 @@ export const AuthContext = React.createContext<IAuthContextType>({
   confirmAccount: async () => {},
   resendConfirmationCode: async () => {},
   getSession: async () => {},
-  getUserAttributeByName: async () => {},
   forgotPassword: async () => {},
 });
 
