@@ -31,3 +31,9 @@ export const QuoteDescription = styled.Text`
 `;
 
 export const DetailButton = styled.TouchableOpacity``;
+
+export const NotFoundLabel = styled.Text`
+  font-size: 14px;
+  color: #fff;
+  margin: 5px;
+`;

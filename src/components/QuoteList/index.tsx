@@ -1,5 +1,4 @@
 import React from 'react';
-import {Text} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   Container,
@@ -8,6 +7,7 @@ import {
   QuoteDescription,
   QuoteInfo,
   QuoteTitle,
+  NotFoundLabel,
 } from './styles';
 
 type Quote = {
@@ -39,7 +39,7 @@ export const QuoteList = ({quotes}: Quotes) => {
           );
         })
       ) : (
-        <Text>Nenhum encontrado...</Text>
+        <NotFoundLabel>Quotes not found...</NotFoundLabel>
       )}
     </Container>
   );
