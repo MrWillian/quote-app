@@ -37,8 +37,9 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
       });
       cognitoUser.authenticateUser(authDetails, {
         onSuccess: async response => {
-          const token = response?.getRefreshToken().getToken();
-          await AsyncStorage.setItem('REFRESH_TOKEN', token);
+          const accessToken = response.getAccessToken().getJwtToken();
+          await AsyncStorage.setItem('ACCESS_TOKEN', accessToken);
+
           resolve({
             type: 'success',
             message: 'Success',
@@ -146,21 +147,24 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
   const clearUnverifiedAccountStore = async () =>
     await AsyncStorage.setItem('UNVERIFIED_ACCOUNT_EMAIL', '');
 
-  const getSessionToken = useCallback(async () => {
-    const currentUser = Pool.getCurrentUser();
-    if (!currentUser) {
-      return;
-    }
-
-    currentUser.getSession((err, session: CognitoUserSession) => {
-      if (err) {
-        return;
-      }
-
-      const sessionToken = session?.getRefreshToken().getToken();
-      return sessionToken;
-    });
-  }, []);
+  const getSession = useCallback(
+    async (currentUser = Pool.getCurrentUser()) => {
+      return await new Promise((resolve, reject) => {
+        if (currentUser) {
+          currentUser.getSession((err, session: CognitoUserSession) => {
+            if (err) {
+              reject();
+            } else {
+              resolve(session);
+            }
+          });
+        } else {
+          reject();
+        }
+      });
+    },
+    [],
+  );
 
   /**
    * confirm account using code
@@ -269,7 +273,9 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
     const currentUser = Pool.getCurrentUser();
     if (currentUser) {
       currentUser.signOut();
+      return true;
     }
+    return false;
   };
 
   const value = {
@@ -281,7 +287,7 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
     signUp,
     confirmAccount,
     resendConfirmationCode,
-    getSessionToken,
+    getSession,
     forgotPassword,
   };
 
