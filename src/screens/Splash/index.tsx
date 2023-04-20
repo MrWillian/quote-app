@@ -17,13 +17,13 @@ export const Splash = () => {
   }, []);
 
   const handleInitialChecks = async () => {
-    handleCurrentUser();
     handleUnverifiedAccount();
+    handleCurrentUser();
   };
 
   const handleCurrentUser = () => {
     if (!currentUser) {
-      setTimeout(() => navigation.navigate('SignIn'), 3000);
+      setTimeout(() => navigation.navigate('SignIn'), 6000);
     }
   };
 
@@ -31,10 +31,6 @@ export const Splash = () => {
     const unverifiedAccountEmail = await retrieveData(UNVERIFIED_ACCOUNT_EMAIL);
     if (unverifiedAccountEmail) {
       setTimeout(() => navigation.navigate('ConfirmationCode'), 2000);
-      return;
-    } else {
-      setTimeout(() => navigation.navigate('SignIn'), 6000);
-      return;
     }
   };
 
