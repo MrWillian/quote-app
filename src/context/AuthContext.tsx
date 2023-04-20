@@ -5,7 +5,6 @@ import {
   CognitoUserAttribute,
   CognitoUserSession,
 } from 'amazon-cognito-identity-js';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {cognitoPool as Pool} from '../utils/cognito-pool';
 import {
   AuthContext,
@@ -14,6 +13,13 @@ import {
   SignUpProps,
   User,
 } from './types/auth';
+import {
+  ACCESS_TOKEN,
+  UNVERIFIED_ACCOUNT_EMAIL,
+  removeData,
+  retrieveData,
+  storeData,
+} from '../utils';
 
 export const AuthProvider = ({children}: IAuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
@@ -37,8 +43,9 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
       });
       cognitoUser.authenticateUser(authDetails, {
         onSuccess: async response => {
-          const token = response?.getRefreshToken().getToken();
-          await AsyncStorage.setItem('REFRESH_TOKEN', token);
+          const accessToken = response.getAccessToken().getJwtToken();
+          await storeData(ACCESS_TOKEN, accessToken);
+
           resolve({
             type: 'success',
             message: 'Success',
@@ -136,31 +143,34 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
   };
 
   const getUnverifiedAccount = async () => {
-    const email = await AsyncStorage.getItem('UNVERIFIED_ACCOUNT_EMAIL');
+    const email = await retrieveData(UNVERIFIED_ACCOUNT_EMAIL);
     return email;
   };
 
   const storeUnverifiedAccount = async (email: string) =>
-    await AsyncStorage.setItem('UNVERIFIED_ACCOUNT_EMAIL', email);
+    await storeData(UNVERIFIED_ACCOUNT_EMAIL, email);
 
   const clearUnverifiedAccountStore = async () =>
-    await AsyncStorage.setItem('UNVERIFIED_ACCOUNT_EMAIL', '');
+    await removeData(UNVERIFIED_ACCOUNT_EMAIL);
 
-  const getSessionToken = useCallback(async () => {
-    const currentUser = Pool.getCurrentUser();
-    if (!currentUser) {
-      return;
-    }
-
-    currentUser.getSession((err, session: CognitoUserSession) => {
-      if (err) {
-        return;
-      }
-
-      const sessionToken = session?.getRefreshToken().getToken();
-      return sessionToken;
-    });
-  }, []);
+  const getSession = useCallback(
+    async (currentUser = Pool.getCurrentUser()) => {
+      return await new Promise((resolve, reject) => {
+        if (currentUser) {
+          currentUser.getSession((err, session: CognitoUserSession) => {
+            if (err) {
+              reject();
+            } else {
+              resolve(session);
+            }
+          });
+        } else {
+          reject();
+        }
+      });
+    },
+    [],
+  );
 
   /**
    * confirm account using code
@@ -269,7 +279,9 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
     const currentUser = Pool.getCurrentUser();
     if (currentUser) {
       currentUser.signOut();
+      return true;
     }
+    return false;
   };
 
   const value = {
@@ -281,7 +293,7 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
     signUp,
     confirmAccount,
     resendConfirmationCode,
-    getSessionToken,
+    getSession,
     forgotPassword,
   };
 

@@ -9,6 +9,14 @@ export const Container = styled.View`
   gap: 5px;
 `;
 
+export const Header = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`;
+
 export const Title = styled.Text`
   align-self: flex-start;
   color: #fff;

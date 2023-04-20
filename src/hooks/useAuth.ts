@@ -1,5 +1,5 @@
 import {useContext} from 'react';
-import {AuthContext, IAuthContextType} from '../context/AuthContext';
+import {AuthContext, IAuthContextType} from '../context/types/auth';
 
 const useAuth = () => useContext(AuthContext) as IAuthContextType;
 

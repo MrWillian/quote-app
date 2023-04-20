@@ -4,9 +4,11 @@ import {QuoteLogo} from '../../components';
 import {mainScreenProp} from '../../routes/MainStack';
 import FadeInView from './FadeInView';
 import {Container, Title, Loading} from './style';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useCurrentUser} from '../../hooks';
+import {UNVERIFIED_ACCOUNT_EMAIL, retrieveData} from '../../utils';
 
 export const Splash = () => {
+  const [currentUser] = useCurrentUser();
   const navigation = useNavigation<mainScreenProp>();
 
   useEffect(() => {
@@ -15,31 +17,25 @@ export const Splash = () => {
   }, []);
 
   const handleInitialChecks = async () => {
-    const token = await getRefreshToken();
-    if (token) {
-      setTimeout(() => navigation.navigate('Dashboard'), 3000);
-      return;
+    handleCurrentUser();
+    handleUnverifiedAccount();
+  };
+
+  const handleCurrentUser = () => {
+    if (!currentUser) {
+      setTimeout(() => navigation.navigate('SignIn'), 3000);
     }
-    const unverifiedAccount = await getUnverifiedAccount();
-    if (unverifiedAccount) {
+  };
+
+  const handleUnverifiedAccount = async () => {
+    const unverifiedAccountEmail = await retrieveData(UNVERIFIED_ACCOUNT_EMAIL);
+    if (unverifiedAccountEmail) {
       setTimeout(() => navigation.navigate('ConfirmationCode'), 2000);
       return;
     } else {
       setTimeout(() => navigation.navigate('SignIn'), 6000);
       return;
     }
-  };
-
-  const getRefreshToken = async () => {
-    const token = await AsyncStorage.getItem('REFRESH_TOKEN');
-    return token;
-  };
-
-  const getUnverifiedAccount = async () => {
-    const unverifiedAccountEmail = await AsyncStorage.getItem(
-      'UNVERIFIED_ACCOUNT_EMAIL',
-    );
-    return unverifiedAccountEmail;
   };
 
   return (

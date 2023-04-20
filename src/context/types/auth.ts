@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface IAuthContextType {
+export interface IAuthContextType {
   user: any;
   isAuthenticated: boolean;
   unverifiedAccount: {email: string; password: string};
@@ -9,7 +9,7 @@ interface IAuthContextType {
   signUp: (p: {name: string; email: string; password: string}) => Promise<any>;
   confirmAccount: (code: string) => Promise<any>;
   resendConfirmationCode: () => Promise<any>;
-  getSessionToken: () => Promise<any>;
+  getSession: () => Promise<any>;
   forgotPassword: (resetEmail: string) => void;
 }
 
@@ -29,7 +29,7 @@ export const AuthContext = React.createContext<IAuthContextType>({
   signUp: async () => {},
   confirmAccount: async () => {},
   resendConfirmationCode: async () => {},
-  getSessionToken: async () => {},
+  getSession: async () => {},
   forgotPassword: async () => {},
 });
 

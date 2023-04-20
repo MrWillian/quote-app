@@ -12,6 +12,7 @@ export const SignIn = () => {
     register,
     setValue,
     handleSubmit,
+    reset,
     formState: {isSubmitting, errors},
   } = useSignInForm();
   const {signIn} = useAuth();
@@ -26,6 +27,7 @@ export const SignIn = () => {
     await signIn(data)
       .then(response => {
         Alert.alert('Success', response.message);
+        reset({email: '', password: ''});
         navigation.navigate('Dashboard');
       })
       .catch(error => {
