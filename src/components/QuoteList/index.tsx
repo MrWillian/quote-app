@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   Container,
@@ -9,19 +9,16 @@ import {
   QuoteTitle,
   NotFoundLabel,
 } from './styles';
+import useQuotes from '../../hooks/useQuotes';
 
-type Quote = {
-  id: string;
-  title: string;
-  description: string;
-  date: string;
-};
+export const QuoteList = () => {
+  const {quotes, listQuotes} = useQuotes();
 
-type Quotes = {
-  quotes: Quote[];
-};
+  useEffect(() => {
+    listQuotes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-export const QuoteList = ({quotes}: Quotes) => {
   return (
     <Container>
       {quotes.length > 0 ? (

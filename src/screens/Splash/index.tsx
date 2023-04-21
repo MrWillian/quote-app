@@ -4,11 +4,11 @@ import {QuoteLogo} from '../../components';
 import {mainScreenProp} from '../../routes/MainStack';
 import FadeInView from './FadeInView';
 import {Container, Title, Loading} from './style';
-import {useCurrentUser} from '../../hooks';
+import {useAuthenticatedUser} from '../../hooks';
 import {UNVERIFIED_ACCOUNT_EMAIL, retrieveData} from '../../utils';
 
 export const Splash = () => {
-  const [currentUser] = useCurrentUser();
+  const [getAuthenticatedUser] = useAuthenticatedUser();
   const navigation = useNavigation<mainScreenProp>();
 
   useEffect(() => {
@@ -17,13 +17,13 @@ export const Splash = () => {
   }, []);
 
   const handleInitialChecks = async () => {
-    handleCurrentUser();
     handleUnverifiedAccount();
+    handleCurrentUser();
   };
 
   const handleCurrentUser = () => {
-    if (!currentUser) {
-      setTimeout(() => navigation.navigate('SignIn'), 3000);
+    if (!getAuthenticatedUser()) {
+      setTimeout(() => navigation.navigate('SignIn'), 6000);
     }
   };
 
@@ -31,10 +31,6 @@ export const Splash = () => {
     const unverifiedAccountEmail = await retrieveData(UNVERIFIED_ACCOUNT_EMAIL);
     if (unverifiedAccountEmail) {
       setTimeout(() => navigation.navigate('ConfirmationCode'), 2000);
-      return;
-    } else {
-      setTimeout(() => navigation.navigate('SignIn'), 6000);
-      return;
     }
   };
 
