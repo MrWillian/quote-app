@@ -30,7 +30,7 @@ export const DetailQuote = () => {
         <QuoteDeleteButton onPress={() => console.log('Delete')}>
           <QuoteDeleteButtonLabel>Delete</QuoteDeleteButtonLabel>
         </QuoteDeleteButton>
-        <Button label="New Search" />
+        <Button title="New Search" />
       </ContentContainer>
     </Container>
   );
