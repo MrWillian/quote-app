@@ -19,4 +19,5 @@ export const SearchInput = styled.TextInput`
   color: #fff;
   font-weight: bold;
   font-size: 16px;
+  width: 80%;
 `;
