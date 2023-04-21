@@ -36,8 +36,8 @@ const MainStackNavigator = () => (
     <Stack.Screen name="Splash" component={Splash} />
     <Stack.Screen name="SignIn" component={SignIn} />
     <Stack.Screen name="SignUp" component={SignUp} />
-    <Stack.Screen name="ConfirmationCode" component={ConfirmationCode} />
     <Stack.Screen name="Dashboard" component={Dashboard} />
+    <Stack.Screen name="ConfirmationCode" component={ConfirmationCode} />
     <Stack.Screen name="RegisterQuote" component={RegisterQuote} />
     <Stack.Screen name="DetailQuote" component={DetailQuote} />
   </Stack.Navigator>

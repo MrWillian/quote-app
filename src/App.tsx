@@ -1,14 +1,14 @@
 import React from 'react';
 import {StatusBar} from 'react-native';
 import RootNavigator from './routes';
-import {AuthProvider} from './context/AuthContext';
+import {AppProvider} from './context';
 
 const App = () => {
   return (
-    <AuthProvider>
+    <AppProvider>
       <StatusBar barStyle={'dark-content'} backgroundColor={'#292B38'} />
       <RootNavigator />
-    </AuthProvider>
+    </AppProvider>
   );
 };
 
