@@ -12,8 +12,14 @@ import {
   Subtitle,
   Title,
 } from './style';
+import {useNavigation} from '@react-navigation/native';
+import {mainScreenProp} from '../../routes/MainStack';
 
 export const DetailQuote = () => {
+  const navigation = useNavigation<mainScreenProp>();
+
+  const handleNavigateToDashboard = () => navigation.navigate('Dashboard');
+
   return (
     <Container>
       <Title>Look!!</Title>
@@ -30,7 +36,7 @@ export const DetailQuote = () => {
         <QuoteDeleteButton onPress={() => console.log('Delete')}>
           <QuoteDeleteButtonLabel>Delete</QuoteDeleteButtonLabel>
         </QuoteDeleteButton>
-        <Button title="New Search" />
+        <Button title="New Search" onPress={handleNavigateToDashboard} />
       </ContentContainer>
     </Container>
   );
