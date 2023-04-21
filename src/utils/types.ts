@@ -7,7 +7,3 @@ export type Quote = {
   description: string;
   date: string;
 };
-
-export type Quotes = {
-  quotes: Quote[];
-};
