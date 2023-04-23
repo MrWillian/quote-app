@@ -14,11 +14,18 @@ import {
 } from './style';
 import {useNavigation} from '@react-navigation/native';
 import {mainScreenProp} from '../../routes/MainStack';
+import {Quote} from '../../utils/types';
 
-export const DetailQuote = () => {
+type Props = {
+  quote?: Quote;
+};
+
+export const DetailQuote = ({quote}: Props) => {
   const navigation = useNavigation<mainScreenProp>();
 
   const handleNavigateToDashboard = () => navigation.navigate('Dashboard');
+
+  console.log('quote', quote);
 
   return (
     <Container>
