@@ -15,7 +15,7 @@ import {mainScreenProp} from '../../routes/MainStack';
 import {Quote} from '../../utils/types';
 
 export const QuoteList = () => {
-  const {quotes, listQuotes} = useQuotes();
+  const {quotes, listQuotes, selectQuote} = useQuotes();
   const navigation = useNavigation<mainScreenProp>();
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export const QuoteList = () => {
   }, []);
 
   const handleDetailQuote = (quote: Quote) => {
-    console.log('selected quote', quote);
+    selectQuote(quote);
     navigation.navigate('DetailQuote', {quote});
   };
 
