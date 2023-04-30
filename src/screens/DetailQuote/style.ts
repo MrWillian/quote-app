@@ -29,15 +29,15 @@ export const Subtitle = styled.Text`
 
 export const ContentContainer = styled.View`
   display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 25px 0px;
   gap: 20px;
 `;
 
 export const ContentContainerHead = styled.View`
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  align-items: center;
 `;
 
 export const QuoteTitle = styled.Text`

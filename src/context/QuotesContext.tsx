@@ -1,27 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useCallback} from 'react';
-import {Quote} from '../utils/types';
 import {getQuotesList} from '../lib/quotes/listQuotes';
 import {useAuthenticatedUser} from '../hooks';
-
-export interface IQuotesContextType {
-  quotes: Quote[];
-  listQuotes: () => Promise<unknown>;
-  filterQuotes: (filter: string) => void;
-}
-
-export const QuotesContext = React.createContext<IQuotesContextType>({
-  quotes: [],
-  listQuotes: async () => null,
-  filterQuotes: () => null,
-});
-
-export interface IQuotesProviderProps {
-  children?: React.ReactNode;
-}
+import {Quote, titleAndDescriptionQuoteIncludesFilter} from '../utils';
+import {IQuotesProviderProps, QuotesContext} from './types/quotes';
 
 export const QuotesProvider = ({children}: IQuotesProviderProps) => {
   const [quotes, setQuotes] = useState<Quote[]>([]);
+  const [selectedQuote, setSelectedQuote] = useState<Quote>();
   const [getAuthenticatedUser] = useAuthenticatedUser();
 
   const listQuotes = async () => {
@@ -63,22 +49,15 @@ export const QuotesProvider = ({children}: IQuotesProviderProps) => {
     setQuotes(filteredQuotes);
   }, []);
 
-  const titleAndDescriptionQuoteIncludesFilter = (
-    quote: Quote,
-    filter: string,
-  ) => {
-    const uncapitalizedTitle = quote.title.toLowerCase();
-    const uncapitalizedDescription = quote.description.toLowerCase();
-    const uncapitalizedFilter = filter.toLowerCase();
-    return (
-      uncapitalizedTitle.includes(uncapitalizedFilter) ||
-      uncapitalizedDescription.includes(uncapitalizedFilter)
-    );
-  };
+  const getSelectedQuote = () => selectedQuote;
+
+  const selectQuote = (quote: Quote) => setSelectedQuote(quote);
 
   const value = {
     quotes,
     listQuotes,
+    getSelectedQuote,
+    selectQuote,
     filterQuotes,
   };
 

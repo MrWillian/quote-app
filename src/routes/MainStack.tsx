@@ -12,6 +12,7 @@ import {
   SignUp,
   Splash,
 } from '../screens';
+import {Quote} from '../utils/types';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,7 +23,7 @@ type MainStackParamList = {
   ConfirmationCode: undefined;
   Dashboard: undefined;
   RegisterQuote: undefined;
-  DetailQuote: undefined;
+  DetailQuote: {quote: Quote};
 };
 
 export type mainScreenProp = NativeStackNavigationProp<MainStackParamList>;
