@@ -6,13 +6,19 @@ import {useAuthenticatedUser} from '../hooks';
 
 export interface IQuotesContextType {
   quotes: Quote[];
+  selectedQuote?: Quote;
   listQuotes: () => Promise<unknown>;
+  getSelectedQuote: () => Quote | undefined;
+  selectQuote: (quote: Quote) => void;
   filterQuotes: (filter: string) => void;
 }
 
 export const QuotesContext = React.createContext<IQuotesContextType>({
   quotes: [],
+  selectedQuote: undefined,
   listQuotes: async () => null,
+  getSelectedQuote: () => undefined,
+  selectQuote: () => null,
   filterQuotes: () => null,
 });
 
@@ -22,6 +28,7 @@ export interface IQuotesProviderProps {
 
 export const QuotesProvider = ({children}: IQuotesProviderProps) => {
   const [quotes, setQuotes] = useState<Quote[]>([]);
+  const [selectedQuote, setSelectedQuote] = useState<Quote>();
   const [getAuthenticatedUser] = useAuthenticatedUser();
 
   const listQuotes = async () => {
@@ -76,9 +83,15 @@ export const QuotesProvider = ({children}: IQuotesProviderProps) => {
     );
   };
 
+  const getSelectedQuote = () => selectedQuote;
+
+  const selectQuote = (quote: Quote) => setSelectedQuote(quote);
+
   const value = {
     quotes,
     listQuotes,
+    getSelectedQuote,
+    selectQuote,
     filterQuotes,
   };
 
