@@ -9,7 +9,7 @@ export const Container = styled.ScrollView`
   elevation: 2;
 `;
 
-export const Quote = styled.View`
+export const QuoteItem = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: space-between;

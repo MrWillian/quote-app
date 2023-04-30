@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button} from '../../components';
 import {
   Container,
@@ -12,25 +12,38 @@ import {
   Subtitle,
   Title,
 } from './style';
+import {useNavigation} from '@react-navigation/native';
+import {mainScreenProp} from '../../routes/MainStack';
+import {Quote} from '../../utils/types';
+import useQuotes from '../../hooks/useQuotes';
 
 export const DetailQuote = () => {
+  const {getSelectedQuote} = useQuotes();
+  const [quote, setQuote] = useState<Quote>();
+  const navigation = useNavigation<mainScreenProp>();
+
+  useEffect(() => {
+    const auxilliaryQuote = getSelectedQuote();
+    setQuote(auxilliaryQuote);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleNavigateToDashboard = () => navigation.navigate('Dashboard');
+
   return (
     <Container>
       <Title>Look!!</Title>
       <Subtitle>This Should Help you Remember...</Subtitle>
-
       <ContentContainer>
         <ContentContainerHead>
-          <QuoteTitle>Chave de Fenda</QuoteTitle>
-          <QuoteDate>18/02/2023</QuoteDate>
+          <QuoteTitle>Title: {quote?.title}</QuoteTitle>
+          <QuoteDate>Date: {quote?.date}</QuoteDate>
         </ContentContainerHead>
-        <QuoteDescription>
-          Eu coloquei a chave de fenda no armário porque na caixa não cabia mais
-        </QuoteDescription>
+        <QuoteDescription>Description: {quote?.description}</QuoteDescription>
         <QuoteDeleteButton onPress={() => console.log('Delete')}>
           <QuoteDeleteButtonLabel>Delete</QuoteDeleteButtonLabel>
         </QuoteDeleteButton>
-        <Button label="New Search" />
+        <Button title="New Search" onPress={handleNavigateToDashboard} />
       </ContentContainer>
     </Container>
   );
