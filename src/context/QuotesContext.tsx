@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useCallback} from 'react';
-import {Quote} from '../utils/types';
 import {getQuotesList} from '../lib/quotes/listQuotes';
 import {useAuthenticatedUser} from '../hooks';
+import {Quote, titleAndDescriptionQuoteIncludesFilter} from '../utils';
 
 export interface IQuotesContextType {
   quotes: Quote[];
@@ -69,19 +69,6 @@ export const QuotesProvider = ({children}: IQuotesProviderProps) => {
     );
     setQuotes(filteredQuotes);
   }, []);
-
-  const titleAndDescriptionQuoteIncludesFilter = (
-    quote: Quote,
-    filter: string,
-  ) => {
-    const uncapitalizedTitle = quote.title.toLowerCase();
-    const uncapitalizedDescription = quote.description.toLowerCase();
-    const uncapitalizedFilter = filter.toLowerCase();
-    return (
-      uncapitalizedTitle.includes(uncapitalizedFilter) ||
-      uncapitalizedDescription.includes(uncapitalizedFilter)
-    );
-  };
 
   const getSelectedQuote = () => selectedQuote;
 
