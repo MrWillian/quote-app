@@ -12,15 +12,17 @@ describe('Register Quote', () => {
     updated_at: null,
   };
 
+  const sanitizedData = sanitizeQuoteDataToSave(payload, USER_ID);
+
   it('should return sanitized object data from sanitizeQuoteDataToSave util function', () => {
-    const sanitizedData = sanitizeQuoteDataToSave(payload, USER_ID);
     expect(sanitizedData).toHaveProperty('id');
     expect(sanitizedData).toMatchObject({title: 'New Test 1'});
   });
 
   it('should register a quote on admin user using the lib registerQuote function', async () => {
-    const data = sanitizeQuoteDataToSave(payload, USER_ID);
-    const result = await registerQuote(data).then(response => response);
+    const result = await registerQuote(sanitizedData).then(
+      response => response,
+    );
     expect(result).toMatchObject({status: '200'});
   });
 });
