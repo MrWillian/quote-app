@@ -1,7 +1,7 @@
 import uuid from 'react-native-uuid';
 
 const sanitizeQuoteDataToSave = (payload, sub: string) => ({
-  id: uuid.v4(),
+  id: payload.id ?? uuid.v4(),
   title: payload.title,
   description: payload.description,
   user_id: sub,
