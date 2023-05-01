@@ -58,6 +58,8 @@ export const QuotesProvider = ({children}: IQuotesProviderProps) => {
     setQuotes(filteredArray);
   };
 
+  const addQuote = quote => setQuotes(prev => [quote, ...prev]);
+
   const value = {
     quotes,
     listQuotes,
@@ -65,6 +67,7 @@ export const QuotesProvider = ({children}: IQuotesProviderProps) => {
     selectQuote,
     filterQuotes,
     removeQuote,
+    addQuote,
   };
 
   return (
