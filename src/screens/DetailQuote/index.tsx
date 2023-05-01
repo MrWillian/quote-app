@@ -16,9 +16,11 @@ import {useNavigation} from '@react-navigation/native';
 import {mainScreenProp} from '../../routes/MainStack';
 import {Quote} from '../../utils/types';
 import useQuotes from '../../hooks/useQuotes';
+import {deleteQuote} from '../../lib/quotes/deleteQuote';
+import {Alert} from 'react-native';
 
 export const DetailQuote = () => {
-  const {getSelectedQuote} = useQuotes();
+  const {getSelectedQuote, removeQuote} = useQuotes();
   const [quote, setQuote] = useState<Quote>();
   const navigation = useNavigation<mainScreenProp>();
 
@@ -27,6 +29,15 @@ export const DetailQuote = () => {
     setQuote(auxilliaryQuote);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleDelete = async (id?: string | number[]) => {
+    const result = await deleteQuote(id);
+    if (result.status === '200') {
+      removeQuote(id);
+      Alert.alert('Success!!');
+      handleNavigateToDashboard();
+    }
+  };
 
   const handleNavigateToDashboard = () => navigation.navigate('Dashboard');
 
@@ -40,7 +51,7 @@ export const DetailQuote = () => {
           <QuoteDate>Date: {quote?.date}</QuoteDate>
         </ContentContainerHead>
         <QuoteDescription>Description: {quote?.description}</QuoteDescription>
-        <QuoteDeleteButton onPress={() => console.log('Delete')}>
+        <QuoteDeleteButton onPress={() => handleDelete(quote?.id)}>
           <QuoteDeleteButtonLabel>Delete</QuoteDeleteButtonLabel>
         </QuoteDeleteButton>
         <Button title="New Search" onPress={handleNavigateToDashboard} />
