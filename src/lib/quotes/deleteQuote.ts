@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export async function deleteQuote(id: string) {
+export async function deleteQuote(id?: string | number[]) {
   let status: string = '200';
   let data;
   let errorMessage: string | null = null;
