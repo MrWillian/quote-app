@@ -53,12 +53,18 @@ export const QuotesProvider = ({children}: IQuotesProviderProps) => {
 
   const selectQuote = (quote: Quote) => setSelectedQuote(quote);
 
+  const removeQuote = (id?: string | number[]) => {
+    let filteredArray = quotes.filter(item => item.id !== id);
+    setQuotes(filteredArray);
+  };
+
   const value = {
     quotes,
     listQuotes,
     getSelectedQuote,
     selectQuote,
     filterQuotes,
+    removeQuote,
   };
 
   return (
