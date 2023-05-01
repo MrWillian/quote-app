@@ -11,7 +11,9 @@ let schema = object().shape({
   title: string()
     .required('O titúlo é obrigatório!')
     .min(3, 'O titúlo deve conter pelo menos 3 caracteres!'),
-  description: string().required('A descrição é obrigatória!'),
+  description: string()
+    .required('A descrição é obrigatória!')
+    .min(5, 'A descrição deve conter pelo menos 5 caracteres!'),
 });
 
 export const useRegisterQuoteForm = () =>
