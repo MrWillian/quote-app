@@ -9,6 +9,7 @@ export interface IQuotesContextType {
   selectQuote: (quote: Quote) => void;
   filterQuotes: (filter: string) => void;
   removeQuote: (id?: string | number[]) => void;
+  addQuote: (quote: Quote) => void;
 }
 
 export const QuotesContext = React.createContext<IQuotesContextType>({
@@ -19,6 +20,7 @@ export const QuotesContext = React.createContext<IQuotesContextType>({
   selectQuote: () => null,
   filterQuotes: () => null,
   removeQuote: () => null,
+  addQuote: () => null,
 });
 
 export interface IQuotesProviderProps {
