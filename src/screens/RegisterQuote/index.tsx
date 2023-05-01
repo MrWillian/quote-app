@@ -8,6 +8,7 @@ import {mainScreenProp} from '../../routes/MainStack';
 import {USER_ID} from '../../../env-vars';
 import {sanitizeQuoteDataToSave} from '../../utils';
 import {useRegisterQuoteForm} from './useRegisterQuoteForm';
+import useQuotes from '../../hooks/useQuotes';
 
 export const RegisterQuote = () => {
   const {
@@ -16,6 +17,7 @@ export const RegisterQuote = () => {
     setValue,
     formState: {isSubmitting, errors},
   } = useRegisterQuoteForm();
+  const {addQuote} = useQuotes();
   const navigation = useNavigation<mainScreenProp>();
 
   useEffect(() => {
@@ -29,6 +31,7 @@ export const RegisterQuote = () => {
     await registerQuote(data)
       .then(response => {
         Alert.alert('Success', response.data);
+        addQuote(data);
         navigation.navigate('Dashboard');
       })
       .catch(error => {
