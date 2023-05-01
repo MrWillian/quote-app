@@ -1,7 +1,4 @@
 import React, {useEffect} from 'react';
-import {useForm} from 'react-hook-form';
-import {yupResolver} from '@hookform/resolvers/yup';
-import {object, string} from 'yup';
 import {Button, TextInput} from '../../components';
 import {Container, Form, Subtitle, Title} from './style';
 import {registerQuote} from '../../lib/quotes/registerQuote';
@@ -10,13 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 import {mainScreenProp} from '../../routes/MainStack';
 import {USER_ID} from '../../../env-vars';
 import {sanitizeQuoteDataToSave} from '../../utils';
-
-let schema = object().shape({
-  title: string()
-    .required('O titúlo é obrigatório!')
-    .min(3, 'O titúlo deve conter pelo menos 3 caracteres!'),
-  description: string().required('A descrição é obrigatória!'),
-});
+import {useRegisterQuoteForm} from './useRegisterQuoteForm';
 
 export const RegisterQuote = () => {
   const {
@@ -24,14 +15,7 @@ export const RegisterQuote = () => {
     handleSubmit,
     setValue,
     formState: {isSubmitting, errors},
-  } = useForm({
-    mode: 'all',
-    resolver: yupResolver(schema),
-    defaultValues: {
-      title: '',
-      description: '',
-    },
-  });
+  } = useRegisterQuoteForm();
   const navigation = useNavigation<mainScreenProp>();
 
   useEffect(() => {
