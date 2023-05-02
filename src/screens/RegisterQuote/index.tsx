@@ -9,6 +9,7 @@ import {USER_ID} from '../../../env-vars';
 import {sanitizeQuoteDataToSave} from '../../utils';
 import {useRegisterQuoteForm} from './useRegisterQuoteForm';
 import useQuotes from '../../hooks/useQuotes';
+import {useTranslation} from 'react-i18next';
 
 export const RegisterQuote = () => {
   const {
@@ -18,6 +19,7 @@ export const RegisterQuote = () => {
     formState: {isSubmitting, errors},
   } = useRegisterQuoteForm();
   const {addQuote} = useQuotes();
+  const {t} = useTranslation();
   const navigation = useNavigation<mainScreenProp>();
 
   useEffect(() => {
@@ -30,31 +32,31 @@ export const RegisterQuote = () => {
     const data = sanitizeQuoteDataToSave(fields, USER_ID);
     await registerQuote(data)
       .then(response => {
-        Alert.alert('Success', response.data);
+        Alert.alert(t('success'), response.data);
         addQuote(data);
         navigation.navigate('Dashboard');
       })
       .catch(error => {
-        Alert.alert('Error', error.message);
+        Alert.alert(t('error'), error.message);
       });
   };
 
   return (
     <Container>
-      <Title>Register!!</Title>
-      <Subtitle>Write Something to Remember...</Subtitle>
+      <Title>{t('register')}!!</Title>
+      <Subtitle>{t('write_something')}</Subtitle>
 
       <Form>
         <TextInput
           id="title"
-          label="Title"
+          label={t('title')}
           error={errors?.title}
           showErrorMessage={true}
           onChangeText={text => setValue('title', text)}
         />
         <TextInput
-          id="Description"
-          label="Description"
+          id="description"
+          label={t('description')}
           error={errors?.description}
           showErrorMessage={true}
           multiline={true}
@@ -63,7 +65,7 @@ export const RegisterQuote = () => {
         />
 
         <Button
-          title="Register"
+          title={t('register')}
           onPress={handleSubmit(onSubmit)}
           isSubmitting={isSubmitting}
         />
