@@ -6,6 +6,7 @@ import {useSignInForm} from './useSignInForm';
 import useAuth from '../../hooks/useAuth';
 import {mainScreenProp} from '../../routes/MainStack';
 import {Alert} from 'react-native';
+import {useTranslation} from 'react-i18next';
 
 export const SignIn = () => {
   const {
@@ -16,6 +17,7 @@ export const SignIn = () => {
     formState: {isSubmitting, errors},
   } = useSignInForm();
   const {signIn} = useAuth();
+  const {t} = useTranslation();
   const navigation = useNavigation<mainScreenProp>();
 
   useEffect(() => {
@@ -26,30 +28,30 @@ export const SignIn = () => {
   const onSubmit = async (data: any) => {
     await signIn(data)
       .then(response => {
-        Alert.alert('Success', response.message);
+        Alert.alert(t('success'), response.message);
         reset({email: '', password: ''});
         navigation.navigate('Dashboard');
       })
       .catch(error => {
-        Alert.alert('Error', error.message);
+        Alert.alert(t('error'), error.message);
       });
   };
 
   return (
     <Container>
       <QuoteLogo />
-      <Title>Hey, Hello!!</Title>
+      <Title>{t('hello')}</Title>
       <Form>
         <Inputs>
           <TextInput
             id="email"
-            label="Email"
+            label={t('email')}
             error={errors?.email}
             onChangeText={text => setValue('email', text)}
           />
           <TextInput
-            id="Password"
-            label="Password"
+            id="password"
+            label={t('password')}
             secureTextEntry={true}
             error={errors?.password}
             onChangeText={text => setValue('password', text)}
@@ -63,11 +65,11 @@ export const SignIn = () => {
           }}
           to="/SignUp"
         >
-          Need an account?
+          {t('need_an_account')}
         </Link>
         <Button
           onPress={handleSubmit(onSubmit)}
-          title="Sign In"
+          title={t('signin')}
           isSubmitting={isSubmitting}
         />
       </Form>
