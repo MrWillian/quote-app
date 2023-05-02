@@ -11,10 +11,12 @@ import {
 } from './style';
 import {mainScreenProp} from '../../routes/MainStack';
 import {useLogout} from '../../hooks';
+import {useTranslation} from 'react-i18next';
 
 export const Dashboard = () => {
   const navigation = useNavigation<mainScreenProp>();
   const [logout] = useLogout();
+  const {t} = useTranslation();
 
   const redirectToRegisterQuote = () => navigation.navigate('RegisterQuote');
 
@@ -23,15 +25,15 @@ export const Dashboard = () => {
   return (
     <Container>
       <Header>
-        <Title>Hey!!</Title>
+        <Title>{t('hey')}</Title>
         <LogOutButton onPress={handleLogout} />
       </Header>
-      <Subtitle>Did You Forget Something?</Subtitle>
+      <Subtitle>{t('forget_something')}</Subtitle>
       <SearchBar />
       <QuoteList />
       <RegisterContainer>
-        <RegisterLabel>Register Before You Forget! ;)</RegisterLabel>
-        <Button title="Register" onPress={redirectToRegisterQuote} />
+        <RegisterLabel>{t('register_before_forget')}</RegisterLabel>
+        <Button title={t('register')} onPress={redirectToRegisterQuote} />
       </RegisterContainer>
     </Container>
   );

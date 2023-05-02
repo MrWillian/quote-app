@@ -7,6 +7,7 @@ import useAuth from '../../hooks/useAuth';
 import {Alert} from 'react-native';
 import {mainScreenProp} from '../../routes/MainStack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useTranslation} from 'react-i18next';
 
 export const SignUp = () => {
   const {
@@ -16,6 +17,7 @@ export const SignUp = () => {
     formState: {isSubmitting, errors},
   } = useSignUpForm();
   const {signUp} = useAuth();
+  const {t} = useTranslation();
   const navigation = useNavigation<mainScreenProp>();
 
   useEffect(() => {
@@ -40,37 +42,37 @@ export const SignUp = () => {
   const onSubmit = async (data: any) => {
     await signUp(data)
       .then(response => {
-        Alert.alert('Success', response.message);
+        Alert.alert(t('success'), response.message);
         navigation.navigate('ConfirmationCode');
       })
       .catch(error => {
-        Alert.alert('Error', error.message);
+        Alert.alert(t('error'), error.message);
       });
   };
 
   return (
     <Container>
       <QuoteLogo />
-      <Title>Create Your Account!!</Title>
+      <Title>{t('create_account')}</Title>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Inputs>
           <TextInput
             id="givenName"
-            label="Name"
+            label={t('name')}
             error={errors?.givenName}
             showErrorMessage={true}
             onChangeText={text => setValue('givenName', text)}
           />
           <TextInput
             id="email"
-            label="Email"
+            label={t('email')}
             error={errors?.email}
             showErrorMessage={true}
             onChangeText={text => setValue('email', text)}
           />
           <TextInput
             id="password"
-            label="Password"
+            label={t('password')}
             secureTextEntry={true}
             error={errors?.password}
             showErrorMessage={true}
@@ -78,7 +80,7 @@ export const SignUp = () => {
           />
           <TextInput
             id="confirmPassword"
-            label="Confirm Password"
+            label={t('confirm_password')}
             secureTextEntry={true}
             error={errors?.confirmPassword}
             showErrorMessage={true}
@@ -86,7 +88,7 @@ export const SignUp = () => {
           />
         </Inputs>
         <Button
-          title="Sign Up"
+          title={t('signup')}
           onPress={handleSubmit(onSubmit)}
           isSubmitting={isSubmitting}
         />
