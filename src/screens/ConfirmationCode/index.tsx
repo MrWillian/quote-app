@@ -17,6 +17,7 @@ import useAuth from '../../hooks/useAuth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {mainScreenProp} from '../../routes/MainStack';
 import {useNavigation} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
 export const ConfirmationCode = () => {
   const [code, setCode] = useState<string>('');
@@ -26,6 +27,7 @@ export const ConfirmationCode = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const {confirmAccount, resendConfirmationCode} = useAuth();
   const navigation = useNavigation<mainScreenProp>();
+  const {t} = useTranslation();
 
   useEffect(() => {
     getUnverifiedAccountEmail();
@@ -63,8 +65,8 @@ export const ConfirmationCode = () => {
     await resendConfirmationCode()
       .then(result => {
         Alert.alert(
-          'Success',
-          `Check your email! ${result.CodeDeliveryDetails.Destination}`,
+          t('success'),
+          `${t('check_your_email')} ${result.CodeDeliveryDetails.Destination}`,
         );
       })
       .catch(error => {
@@ -75,8 +77,8 @@ export const ConfirmationCode = () => {
   return (
     <Container>
       <QuoteLogo />
-      <Title>Please, check your email!!</Title>
-      <Subtitle>We Send a Email To</Subtitle>
+      <Title>{t('please_check_you_email')}</Title>
+      <Subtitle>{t('we_send_a_email')}</Subtitle>
       <EmailLabel>{unverifiedAccountEmail}</EmailLabel>
       <Form>
         <NextTextInput
@@ -86,13 +88,13 @@ export const ConfirmationCode = () => {
           onChangeValue={(_, value) => handleChange(value)}
         />
         <ResendContainer>
-          <ResendLabel>You do not receive?</ResendLabel>
+          <ResendLabel>{t('you_receive_it')}</ResendLabel>
           <ResendLinkContainer onPress={handleResendConfirmationCode}>
-            <ResendLinkText>Resend</ResendLinkText>
+            <ResendLinkText>{t('resend')}</ResendLinkText>
           </ResendLinkContainer>
         </ResendContainer>
         <Button
-          title="Verify"
+          title={t('verify')}
           onPress={handleVerifyCode}
           isSubmitting={isSubmitting}
         />

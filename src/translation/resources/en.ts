@@ -4,6 +4,11 @@ export default {
   look: 'Look!!',
   this_should_help_you: 'This Should Help you Remember...!!',
   write_something: 'Write Something to Remember...!!',
+  please_check_you_email: 'Please, check your email!!',
+  we_send_a_email: 'We Send a Email to',
+  you_receive_it: 'Did not you receive it?',
+  resend: 'Resend',
+
   title: 'Title:',
   date: 'Date:',
   description: 'Description:',
@@ -23,6 +28,7 @@ export default {
   create_account: 'Create Your Account!!',
   name: 'Name',
   search: 'Search by word...',
+  check_you_email: 'Check your email!',
 
   required_email: 'The email is required',
   valid_email: 'Enter a valid email address',

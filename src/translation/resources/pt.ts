@@ -4,6 +4,11 @@ export default {
   look: 'Olhe!!',
   this_should_help_you: 'Isso Deve Ajudá-lo a se Lembrar...!!',
   write_something: 'Escreva Algo para se Lembrar...!!',
+  please_check_you_email: 'Por favor, verifique seu email!!',
+  we_send_a_email: 'Nós enviamos um email para',
+  you_receive_it: 'Você não recebeu?',
+  resend: 'Reenviar',
+
   title: 'Titúlo:',
   date: 'Data:',
   description: 'Descrição:',
@@ -20,9 +25,11 @@ export default {
   signup: 'Cadastrar',
   register: 'Registrar',
   new_search: 'Nova Pesquisa',
+  verify: 'Verificar',
   create_account: 'Crie Sua Conta!!',
   name: 'Nome',
   search: 'Pesquise por palavra...',
+  check_you_email: 'Veja seu email!',
 
   required_email: 'O email é obrigatório!',
   valid_email: 'Digite um email válido',
