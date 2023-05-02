@@ -6,10 +6,12 @@ import FadeInView from './FadeInView';
 import {Container, Title, Loading} from './style';
 import {useAuthenticatedUser} from '../../hooks';
 import {UNVERIFIED_ACCOUNT_EMAIL, retrieveData} from '../../utils';
+import {useTranslation} from 'react-i18next';
 
 export const Splash = () => {
   const [getAuthenticatedUser] = useAuthenticatedUser();
   const navigation = useNavigation<mainScreenProp>();
+  const {t} = useTranslation();
 
   useEffect(() => {
     handleInitialChecks();
@@ -38,7 +40,7 @@ export const Splash = () => {
     <Container>
       <FadeInView>
         <QuoteLogo />
-        <Title>Welcome</Title>
+        <Title>{t('welcome')}</Title>
         <FadeInView duration={10000}>
           <Loading size="large" color="#5c5091" />
         </FadeInView>

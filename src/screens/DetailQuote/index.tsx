@@ -17,11 +17,13 @@ import {mainScreenProp} from '../../routes/MainStack';
 import {Quote} from '../../utils/types';
 import useQuotes from '../../hooks/useQuotes';
 import {deleteQuote} from '../../lib/quotes/deleteQuote';
+import {useTranslation} from 'react-i18next';
 import {Alert} from 'react-native';
 
 export const DetailQuote = () => {
   const {getSelectedQuote, removeQuote} = useQuotes();
   const [quote, setQuote] = useState<Quote>();
+  const {t} = useTranslation();
   const navigation = useNavigation<mainScreenProp>();
 
   useEffect(() => {
@@ -34,7 +36,7 @@ export const DetailQuote = () => {
     const result = await deleteQuote(id);
     if (result.status === '200') {
       removeQuote(id);
-      Alert.alert('Success!!');
+      Alert.alert(t('success'));
       handleNavigateToDashboard();
     }
   };
@@ -43,18 +45,24 @@ export const DetailQuote = () => {
 
   return (
     <Container>
-      <Title>Look!!</Title>
-      <Subtitle>This Should Help you Remember...</Subtitle>
+      <Title>{t('look')}</Title>
+      <Subtitle>{t('this_should_help_you')}</Subtitle>
       <ContentContainer>
         <ContentContainerHead>
-          <QuoteTitle>Title: {quote?.title}</QuoteTitle>
-          <QuoteDate>Date: {quote?.date}</QuoteDate>
+          <QuoteTitle>
+            {`${t('title')}`} {quote?.title}
+          </QuoteTitle>
+          <QuoteDate>
+            {`${t('date')}`} {quote?.date}
+          </QuoteDate>
         </ContentContainerHead>
-        <QuoteDescription>Description: {quote?.description}</QuoteDescription>
+        <QuoteDescription>
+          {`${t('description')}`} {quote?.description}
+        </QuoteDescription>
         <QuoteDeleteButton onPress={() => handleDelete(quote?.id)}>
-          <QuoteDeleteButtonLabel>Delete</QuoteDeleteButtonLabel>
+          <QuoteDeleteButtonLabel>{t('delete')}</QuoteDeleteButtonLabel>
         </QuoteDeleteButton>
-        <Button title="New Search" onPress={handleNavigateToDashboard} />
+        <Button title={t('new_search')} onPress={handleNavigateToDashboard} />
       </ContentContainer>
     </Container>
   );
