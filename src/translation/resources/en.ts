@@ -1,4 +1,5 @@
 export default {
+  welcome: 'Welcome',
   hello: 'Hey, Hello!!',
   hey: 'Hey!!',
   look: 'Look!!',
