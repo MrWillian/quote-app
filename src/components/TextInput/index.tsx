@@ -4,7 +4,7 @@ import {Container, ErrorLabel, Input, Label} from './styles';
 import {FieldError} from 'react-hook-form';
 
 type Props = {
-  label?: string;
+  label?: string | null;
   error?: Omit<FieldError, 'type'>;
   showErrorMessage?: boolean;
 } & TextInputProps;
