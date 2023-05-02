@@ -1,0 +1,43 @@
+export default {
+  hello: 'Ei, Olá!!',
+  hey: 'Ei!!',
+  look: 'Olhe!!',
+  this_should_help_you: 'Isso Deve Ajudá-lo a se Lembrar...!!',
+  write_something: 'Escreva Algo para se Lembrar...!!',
+  title: 'Titúlo:',
+  date: 'Data:',
+  description: 'Descrição:',
+  delete: 'Deletar',
+  email: 'Email',
+  password: 'Senha',
+  confirm_password: 'Confirmar Senha',
+  success: 'Sucesso',
+  error: 'Erro',
+  need_an_account: 'Precisa de uma conta?',
+  forget_something: 'Você se Esqueceu de Algo?',
+  register_before_forget: 'Registre Antes que Esqueça! ;)',
+  signin: 'Entrar',
+  signup: 'Cadastrar',
+  register: 'Registrar',
+  new_search: 'Nova Pesquisa',
+  create_account: 'Crie Sua Conta!!',
+  name: 'Nome',
+  search: 'Pesquise por palavra...',
+
+  required_email: 'O email é obrigatório!',
+  valid_email: 'Digite um email válido',
+  required_password: 'A senha é obrigatória!',
+  valid_confirm_password: 'As senhas não correspondem!',
+  minimum_characters_password: 'A senha deve conter pelo menos 8 dígitos',
+  required_name: 'O nome é obrigatório!',
+  minimum_characters_name: 'O nome deve conter pelo menos 3 caracteres!',
+  valid_password: `A senha deve conter pelo menos 8 caracteres, entre eles: 
+  * um número
+  * um caractere especial (!@#$%^&.*)
+  * uma letra maiúsucla e uma minúscula`,
+  required_title: 'O titúlo é obrigatório',
+  minimum_characters_title: 'O titúlo deve conter pelo menos 3 caracteres',
+  required_description: 'A descrição é obrigatória',
+  minimum_characters_description:
+    'A descrição deve conter pelo menos 5 caracteres',
+};
