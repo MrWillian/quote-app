@@ -27,10 +27,13 @@ export default {
   register: 'Registrar',
   new_search: 'Nova Pesquisa',
   verify: 'Verificar',
+  cancel: 'Cancelar',
+  yes: 'Sim',
   create_account: 'Crie Sua Conta!!',
   name: 'Nome',
   search: 'Pesquise por palavra...',
   check_you_email: 'Veja seu email!',
+  sure_you_want_delete: 'Tem certeza que Deseja Deletar?',
 
   required_email: 'O email é obrigatório!',
   valid_email: 'Digite um email válido',

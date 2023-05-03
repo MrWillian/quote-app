@@ -33,6 +33,20 @@ export const DetailQuote = () => {
   }, []);
 
   const handleDelete = async (id?: string | number[]) => {
+    Alert.alert(t('delete'), t('sure_you_want_delete') ?? '', [
+      {
+        text: t('cancel') ?? '',
+        onPress: () => null,
+        style: 'cancel',
+      },
+      {
+        text: t('yes') ?? '',
+        onPress: () => remove(id),
+      },
+    ]);
+  };
+
+  const remove = async (id?: string | number[]) => {
     const result = await deleteQuote(id);
     if (result.status === '200') {
       removeQuote(id);
