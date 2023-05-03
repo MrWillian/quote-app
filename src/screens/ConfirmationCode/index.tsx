@@ -15,7 +15,7 @@ import {
 } from './style';
 import useAuth from '../../hooks/useAuth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {mainScreenProp} from '../../routes/MainStack';
+import {mainScreenProp} from '../../routes/types';
 import {useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 

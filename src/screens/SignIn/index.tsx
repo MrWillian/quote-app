@@ -4,7 +4,7 @@ import {Button, QuoteLogo, TextInput} from '../../components';
 import {Container, Form, Inputs, Title} from './style';
 import {useSignInForm} from './useSignInForm';
 import useAuth from '../../hooks/useAuth';
-import {mainScreenProp} from '../../routes/MainStack';
+import {mainScreenProp} from '../../routes/types';
 import {Alert} from 'react-native';
 import {useTranslation} from 'react-i18next';
 

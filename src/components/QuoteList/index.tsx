@@ -11,7 +11,7 @@ import {
 } from './styles';
 import useQuotes from '../../hooks/useQuotes';
 import {useNavigation} from '@react-navigation/native';
-import {mainScreenProp} from '../../routes/MainStack';
+import {mainScreenProp} from '../../routes/types';
 import {Quote} from '../../utils/types';
 
 export const QuoteList = () => {
@@ -25,7 +25,7 @@ export const QuoteList = () => {
 
   const handleDetailQuote = (quote: Quote) => {
     selectQuote(quote);
-    navigation.navigate('DetailQuote', {quote});
+    navigation.navigate('DetailQuote');
   };
 
   return (

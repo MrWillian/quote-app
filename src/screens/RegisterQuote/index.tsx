@@ -4,7 +4,7 @@ import {Container, Form, Subtitle, Title} from './style';
 import {registerQuote} from '../../lib/quotes/registerQuote';
 import {Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {mainScreenProp} from '../../routes/MainStack';
+import {mainScreenProp} from '../../routes/types';
 import {USER_ID} from '../../../env-vars';
 import {sanitizeQuoteDataToSave} from '../../utils';
 import {useRegisterQuoteForm} from './useRegisterQuoteForm';

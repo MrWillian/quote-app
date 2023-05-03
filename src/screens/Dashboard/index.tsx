@@ -9,9 +9,9 @@ import {
   Title,
   Header,
 } from './style';
-import {mainScreenProp} from '../../routes/MainStack';
 import {useLogout} from '../../hooks';
 import {useTranslation} from 'react-i18next';
+import {mainScreenProp} from '../../routes/types';
 
 export const Dashboard = () => {
   const navigation = useNavigation<mainScreenProp>();

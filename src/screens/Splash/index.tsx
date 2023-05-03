@@ -1,7 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect} from 'react';
 import {QuoteLogo} from '../../components';
-import {mainScreenProp} from '../../routes/MainStack';
+import {mainScreenProp} from '../../routes/types';
 import FadeInView from './FadeInView';
 import {Container, Title, Loading} from './style';
 import {useAuthenticatedUser} from '../../hooks';

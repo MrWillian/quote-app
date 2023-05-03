@@ -5,7 +5,7 @@ import {Container, Form, Inputs, Title} from './style';
 import {useSignUpForm} from './useSignUpForm';
 import useAuth from '../../hooks/useAuth';
 import {Alert} from 'react-native';
-import {mainScreenProp} from '../../routes/MainStack';
+import {mainScreenProp} from '../../routes/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTranslation} from 'react-i18next';
 

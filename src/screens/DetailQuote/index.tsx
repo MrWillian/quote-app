@@ -13,7 +13,7 @@ import {
   Title,
 } from './style';
 import {useNavigation} from '@react-navigation/native';
-import {mainScreenProp} from '../../routes/MainStack';
+import {mainScreenProp} from '../../routes/types';
 import {Quote} from '../../utils/types';
 import useQuotes from '../../hooks/useQuotes';
 import {deleteQuote} from '../../lib/quotes/deleteQuote';
