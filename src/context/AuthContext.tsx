@@ -5,6 +5,7 @@ import {
   CognitoUserAttribute,
   CognitoUserSession,
 } from 'amazon-cognito-identity-js';
+import {useTranslation} from 'react-i18next';
 import {cognitoPool as Pool} from '../utils/cognito-pool';
 import {
   AuthContext,
@@ -23,6 +24,7 @@ import {
 
 export const AuthProvider = ({children}: IAuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
+  const {t} = useTranslation();
   const [unverifiedAccount, setUnverifiedAccount] = useState({
     email: '',
     password: '',
@@ -58,20 +60,19 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
             case 'NotAuthorizedException':
               reject({
                 type: 'error',
-                message: 'Incorrect username or password.',
+                message: t('not_authorized'),
               });
               break;
             case 'UserNotConfirmedException':
               reject({
                 type: 'error',
-                message: 'Please confirm your email address.',
+                message: t('user_not_confirmed'),
               });
               break;
             default:
               reject({
                 type: 'error',
-                message:
-                  'Oops! Looks like something went wrong. Please try again later.',
+                message: t('default_error'),
               });
           }
         },
@@ -104,27 +105,25 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
             case 'InvalidParameterException':
               reject({
                 type: 'Error',
-                message: 'Please enter a valid email address.',
+                message: t('invalid_parameter'),
               });
               break;
             case 'InvalidPasswordException':
               reject({
                 type: 'Error',
-                message: 'Your password must be at least 6 characters long.',
+                message: t('invalid_password'),
               });
               break;
             case 'UsernameExistsException':
               reject({
                 type: 'Error',
-                message:
-                  'An account associated with this email address already exists.',
+                message: t('username_exists'),
               });
               break;
             default:
               reject({
                 type: 'Error',
-                message:
-                  'Oops! Looks like something went wrong. Please try again later.',
+                message: t('default_error'),
               });
           }
         }
@@ -135,8 +134,7 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
         resolve({
           type: 'Success',
           data,
-          message:
-            'A confirmation email has been sent to your email address. Please check the code inside.',
+          message: t('confirmation_email'),
         });
       });
     });
@@ -198,21 +196,19 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
             case 'ExpiredCodeException':
               reject({
                 type: 'Error',
-                message: 'Invalid code provided, please request a code again.',
+                message: t('expired_code'),
               });
               break;
             case 'CodeMismatchException':
               reject({
                 type: 'Error',
-                message:
-                  'Invalid verification code provided, please try again.',
+                message: t('code_mismatch'),
               });
               break;
             default:
               reject({
                 type: 'Error',
-                message:
-                  'Oops! Looks like something went wrong. Please try again later.',
+                message: t('default_error'),
               });
           }
         }
@@ -230,7 +226,7 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
           resolve({
             type: 'redirect',
             result,
-            message: 'Log In with your email and password!',
+            message: t('redirect_and_login'),
           });
         }
       });

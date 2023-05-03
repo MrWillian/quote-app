@@ -52,4 +52,18 @@ export default {
   required_description: 'The description is required',
   minimum_characters_description:
     'The description must contain at least 5 characters',
+
+  not_authorized: 'Incorrect username or password.',
+  user_not_confirmed: 'Please confirm your email address.',
+  default_error:
+    'Oops! Looks like something went wrong. Please try again later.',
+  invalid_parameter: 'Please enter a valid email address.',
+  invalid_password: 'Your password must be at least 6 characters long.',
+  username_exists:
+    'An account associated with this email address already exists.',
+  confirmation_email:
+    'A confirmation email has been sent to your email address. Please check the code inside.',
+  expired_code: 'Invalid code provided, please request a code again.',
+  code_mismatch: 'Invalid verification code provided, please try again.',
+  redirect_and_login: 'Log In with your email and password!',
 };

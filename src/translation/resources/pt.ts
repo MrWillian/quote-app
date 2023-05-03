@@ -51,4 +51,17 @@ export default {
   required_description: 'A descrição é obrigatória',
   minimum_characters_description:
     'A descrição deve conter pelo menos 5 caracteres',
+
+  not_authorized: 'Email ou Senha incorretos.',
+  user_not_confirmed: 'Por favor, confirme seu endereço de email.',
+  default_error:
+    'Oops! Algo aparece errado. Por favor, tente novamente mais tarde.',
+  invalid_parameter: 'Por favor, informe um email válido.',
+  invalid_password: 'Sua senha deverá conter pelo menos 8 caracteres.',
+  username_exists: 'Uma conta associada com este email já existe.',
+  confirmation_email:
+    'Um email de confirmação foi enviado para o seu. Por favor, verifique o código dentro dele.',
+  expired_code: 'Código inválido, por favor peça um código novamente.',
+  code_mismatch: 'Código inválido, por favor tente novamente.',
+  redirect_and_login: 'Entre com seu email e senha!',
 };
