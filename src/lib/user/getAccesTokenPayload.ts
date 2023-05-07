@@ -7,9 +7,9 @@ const verifier = CognitoJwtVerifier.create({
   clientId: CLIENT_ID,
 });
 
-const getPayload = async (accessToken: string) => {
+const getPayload = async (accessToken: string | null) => {
   try {
-    const payload = await verifier.verify(accessToken);
+    const payload = await verifier.verify(accessToken ?? '');
     console.log('Token is valid. Payload:', payload);
   } catch {
     console.log('Token not valid!');
