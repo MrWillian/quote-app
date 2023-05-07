@@ -11,6 +11,7 @@ export interface IAuthContextType {
   resendConfirmationCode: () => Promise<any>;
   getSession: () => Promise<any>;
   forgotPassword: (resetEmail: string) => void;
+  getUserByAccessToken: () => void;
 }
 
 export interface IAuthProviderProps {
@@ -31,6 +32,7 @@ export const AuthContext = React.createContext<IAuthContextType>({
   resendConfirmationCode: async () => {},
   getSession: async () => {},
   forgotPassword: async () => {},
+  getUserByAccessToken: async () => {},
 });
 
 export type User = {
