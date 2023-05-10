@@ -224,18 +224,19 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
         : storedEmail !== null
         ? storedEmail
         : '';
-    const cognitoUser = new CognitoUser({
-      Username: email,
-      Pool: Pool,
-    });
-    return await new Promise((resolve, reject) => {
-      cognitoUser.resendConfirmationCode((error, result) => {
-        if (error) {
-          reject(error);
-        }
-        resolve(result);
-      });
-    });
+    try {
+      await Auth.resendSignUp(email);
+      return {
+        type: 'success',
+        message: t('code_resent_succesfully'),
+      };
+    } catch (error) {
+      console.error('resend error', error);
+      return {
+        type: 'error',
+        message: t('default_error'),
+      };
+    }
   };
 
   const forgotPassword = (resetEmail: string) => {
