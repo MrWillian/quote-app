@@ -40,14 +40,13 @@ export const SignUp = () => {
   };
 
   const onSubmit = async (data: any) => {
-    await signUp(data)
-      .then(response => {
-        Alert.alert(t('success'), response.message);
-        navigation.navigate('ConfirmationCode');
-      })
-      .catch(error => {
-        Alert.alert(t('error'), error.message);
-      });
+    const response = await signUp(data);
+    if (response.type === 'error') {
+      Alert.alert(t('error'), response.message);
+    }
+
+    Alert.alert(t('success'), response.message);
+    navigation.navigate('ConfirmationCode');
   };
 
   return (
