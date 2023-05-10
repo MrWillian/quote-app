@@ -2,7 +2,6 @@ import React, {useCallback, useState} from 'react';
 import {
   AuthenticationDetails,
   CognitoUser,
-  CognitoUserAttribute,
   CognitoUserSession,
 } from 'amazon-cognito-identity-js';
 import {useTranslation} from 'react-i18next';
@@ -21,6 +20,8 @@ import {
   retrieveData,
   storeData,
 } from '../utils';
+import {Auth} from 'aws-amplify';
+import getPayload from '../lib/user/getAccesTokenPayload';
 
 export const AuthProvider = ({children}: IAuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
@@ -86,58 +87,40 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
    * @param password
    * @param name
    */
-  const signUp = async ({email, password, name}: SignUpProps) => {
-    const userAttributes = [
-      new CognitoUserAttribute({
-        Name: 'given_name',
-        Value: name,
-      }),
-      new CognitoUserAttribute({
-        Name: 'email',
-        Value: email,
-      }),
-    ];
-
-    return new Promise((resolve, reject) => {
-      Pool.signUp(email, password, userAttributes, [], (err, data) => {
-        if (err) {
-          switch (err.name) {
-            case 'InvalidParameterException':
-              reject({
-                type: 'Error',
-                message: t('invalid_parameter'),
-              });
-              break;
-            case 'InvalidPasswordException':
-              reject({
-                type: 'Error',
-                message: t('invalid_password'),
-              });
-              break;
-            case 'UsernameExistsException':
-              reject({
-                type: 'Error',
-                message: t('username_exists'),
-              });
-              break;
-            default:
-              reject({
-                type: 'Error',
-                message: t('default_error'),
-              });
-          }
-        }
-
-        setUnverifiedAccount({email, password});
-        storeUnverifiedAccount(email);
-
-        resolve({
-          type: 'Success',
-          data,
-          message: t('confirmation_email'),
-        });
+  const signUp = async ({email, password, givenName}: SignUpProps) => {
+    try {
+      const {user: authenticatedUser} = await Auth.signUp({
+        username: email,
+        password,
+        attributes: {
+          email,
+          given_name: givenName,
+        },
+        autoSignIn: {
+          enabled: true,
+        },
       });
-    });
+      setUnverifiedAccount({email, password});
+      storeUnverifiedAccount(email);
+      return {
+        type: 'success',
+        authenticatedUser,
+        message: t('confirmation_email'),
+      };
+    } catch (error) {
+      console.log(error);
+      // TODO: Handle ERRORS: InvalidParameterException, InvalidPasswordException, UsernameExistsException
+      return {
+        type: 'error',
+        message: '' + error,
+      };
+    }
+  };
+
+  const getUserByAccessToken = async () => {
+    const token = await retrieveData(ACCESS_TOKEN);
+    console.log(token);
+    await getPayload(token);
   };
 
   const getUnverifiedAccount = async () => {
@@ -291,6 +274,7 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
     resendConfirmationCode,
     getSession,
     forgotPassword,
+    getUserByAccessToken,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
