@@ -166,16 +166,13 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
     });
   };
 
-  /**
-   * logout user
-   */
   const signOut = async () => {
-    const currentUser = Pool.getCurrentUser();
-    if (currentUser) {
-      currentUser.signOut();
+    try {
+      await Auth.signOut();
       return true;
+    } catch (error) {
+      return false;
     }
-    return false;
   };
 
   const getUnverifiedAccount = async () => {
