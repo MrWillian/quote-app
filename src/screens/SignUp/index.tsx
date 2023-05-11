@@ -6,7 +6,7 @@ import {useSignUpForm} from './useSignUpForm';
 import useAuth from '../../hooks/useAuth';
 import {Alert} from 'react-native';
 import {mainScreenProp} from '../../routes/types';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {UNVERIFIED_ACCOUNT_EMAIL, retrieveData} from '../../utils';
 import {useTranslation} from 'react-i18next';
 
 export const SignUp = () => {
@@ -33,7 +33,7 @@ export const SignUp = () => {
   }, [register]);
 
   const handleUnverifiedAccount = async () => {
-    const emailAccount = await AsyncStorage.getItem('UNVERIFIED_ACCOUNT_EMAIL');
+    const emailAccount = await retrieveData(UNVERIFIED_ACCOUNT_EMAIL);
     if (emailAccount) {
       navigation.navigate('ConfirmationCode');
     }
