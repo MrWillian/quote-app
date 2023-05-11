@@ -109,7 +109,7 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
       };
     } catch (error) {
       console.log(error);
-      // TODO: Handle ERRORS: InvalidParameterException, InvalidPasswordException, UsernameExistsException
+      // TODO: Handle ERRORS: InvalidParameterException, InvalidPasswordException, UsernameExistsException and DEFAULT
       return {
         type: 'error',
         message: '' + error,
@@ -121,11 +121,6 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
     const token = await retrieveData(ACCESS_TOKEN);
     console.log(token);
     await getPayload(token);
-  };
-
-  const getUnverifiedAccount = async () => {
-    const email = await retrieveData(UNVERIFIED_ACCOUNT_EMAIL);
-    return email;
   };
 
   const storeUnverifiedAccount = async (email: string) =>
@@ -154,76 +149,40 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
   );
 
   /**
-   * confirm account using code
+   * confirm account using code param
    * @param code
    * @returns {Promise<any>}
    */
-  const confirmAccount = async (code: string) => {
-    const storedEmail = await getUnverifiedAccount();
-    const email: string =
-      unverifiedAccount.email !== ''
-        ? unverifiedAccount?.email
-        : storedEmail !== null
-        ? storedEmail
-        : '';
-    const cognitoUser = new CognitoUser({
-      Username: email,
-      Pool: Pool,
-    });
-
-    return new Promise((resolve, reject) => {
-      cognitoUser.confirmRegistration(code, false, (error, result) => {
-        if (error) {
-          console.log('error', error);
-          switch (error.name) {
-            case 'ExpiredCodeException':
-              reject({
-                type: 'Error',
-                message: t('expired_code'),
-              });
-              break;
-            case 'CodeMismatchException':
-              reject({
-                type: 'Error',
-                message: t('code_mismatch'),
-              });
-              break;
-            default:
-              reject({
-                type: 'Error',
-                message: t('default_error'),
-              });
-          }
-        }
+  const confirmAccount = async (code: string): Promise<any> => {
+    const email = await getUnverifiedAccount();
+    try {
+      const result = await Auth.confirmSignUp(email, code);
+      if (result === 'SUCCESS') {
         clearUnverifiedAccountStore();
         if (unverifiedAccount) {
           signIn({
             email: unverifiedAccount?.email,
             password: unverifiedAccount?.password,
           });
-          resolve({
-            type: 'success',
-            result,
-          });
+          return {type: 'success'};
         } else {
-          resolve({
+          return {
             type: 'redirect',
-            result,
-            message: t('redirect_and_login'),
-          });
+            message: 'Log In with your email and password!',
+          };
         }
-      });
-    });
+      }
+    } catch (error) {
+      // TODO: Handle ERRORS: ExpiredCodeException, CodeMismatchException, DEFAULT
+      return {
+        type: 'error',
+        message: t('error_on_confirm_signup'),
+      };
+    }
   };
 
   const resendConfirmationCode = async () => {
-    const storedEmail = await getUnverifiedAccount();
-    const email: string =
-      unverifiedAccount.email !== ''
-        ? unverifiedAccount?.email
-        : storedEmail !== null
-        ? storedEmail
-        : '';
+    const email = await getUnverifiedAccount();
     try {
       await Auth.resendSignUp(email);
       return {
@@ -262,6 +221,17 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
       return true;
     }
     return false;
+  };
+
+  const getUnverifiedAccount = async () => {
+    const storedEmail = await retrieveData(UNVERIFIED_ACCOUNT_EMAIL);
+    const email: string =
+      unverifiedAccount.email !== ''
+        ? unverifiedAccount?.email
+        : storedEmail !== null
+        ? storedEmail
+        : '';
+    return email;
   };
 
   const value = {
