@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, StyleSheet} from 'react-native';
+import {ActivityIndicator, Alert, StyleSheet} from 'react-native';
 import {Button, QuoteLogo} from '../../components';
 import NextTextInput from 'react-native-next-input';
 import {
@@ -26,6 +26,7 @@ export const ConfirmationCode = () => {
   >('');
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const {confirmAccount, resendConfirmationCode} = useAuth();
+  const [resendLoading, setResendLoading] = useState(false);
   const navigation = useNavigation<mainScreenProp>();
   const {t} = useTranslation();
 
@@ -45,32 +46,24 @@ export const ConfirmationCode = () => {
 
   const handleVerifyCode = async () => {
     setIsSubmitting(true);
-    await confirmAccount(code)
-      .then(result => {
-        if (result.type === 'success') {
-          navigation.navigate('Dashboard');
-        } else if (result.type === 'redirect') {
-          navigation.navigate('SignIn');
-        }
-        setIsSubmitting(false);
-      })
-      .catch(error => {
-        setIsSubmitting(false);
-        Alert.alert(error.type, error.message);
-      });
+    const result = await confirmAccount(code);
+    if (result.type === 'success') {
+      navigation.navigate('Dashboard');
+    } else if (result.type === 'redirect') {
+      navigation.navigate('SignIn');
+    }
+    setIsSubmitting(false);
+    Alert.alert(t('error'), result.message);
   };
 
   const handleResendConfirmationCode = async () => {
-    await resendConfirmationCode()
-      .then(result => {
-        Alert.alert(
-          t('success'),
-          `${t('check_your_email')} ${result.CodeDeliveryDetails.Destination}`,
-        );
-      })
-      .catch(error => {
-        Alert.alert(error.type, error.message);
-      });
+    setResendLoading(true);
+    const result = await resendConfirmationCode();
+    if (result.type === 'error') {
+      Alert.alert(t('error'), result.message);
+    }
+    setResendLoading(false);
+    Alert.alert(t('success'), t('code_resent_succesfully') ?? '');
   };
 
   return (
@@ -89,7 +82,11 @@ export const ConfirmationCode = () => {
         <ResendContainer>
           <ResendLabel>{t('you_receive_it')}</ResendLabel>
           <ResendLinkContainer onPress={handleResendConfirmationCode}>
-            <ResendLinkText>{t('resend')}</ResendLinkText>
+            {!resendLoading ? (
+              <ResendLinkText>{t('resend')}</ResendLinkText>
+            ) : (
+              <ActivityIndicator size="small" />
+            )}
           </ResendLinkContainer>
         </ResendContainer>
         <Button
