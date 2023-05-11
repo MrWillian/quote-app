@@ -21,7 +21,6 @@ import {
   storeData,
 } from '../utils';
 import {Auth} from 'aws-amplify';
-import getPayload from '../lib/user/getAccesTokenPayload';
 
 export const AuthProvider = ({children}: IAuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
@@ -115,12 +114,6 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
         message: '' + error,
       };
     }
-  };
-
-  const getUserByAccessToken = async () => {
-    const token = await retrieveData(ACCESS_TOKEN);
-    console.log(token);
-    await getPayload(token);
   };
 
   const storeUnverifiedAccount = async (email: string) =>
@@ -245,7 +238,6 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
     resendConfirmationCode,
     getSession,
     forgotPassword,
-    getUserByAccessToken,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
