@@ -32,7 +32,6 @@ export default {
   create_account: 'Crie Sua Conta!!',
   name: 'Nome',
   search: 'Pesquise por palavra...',
-  check_you_email: 'Veja seu email!',
   sure_you_want_delete: 'Tem certeza que Deseja Deletar?',
 
   required_email: 'O email é obrigatório!',
@@ -64,4 +63,6 @@ export default {
   expired_code: 'Código inválido, por favor peça um código novamente.',
   code_mismatch: 'Código inválido, por favor tente novamente.',
   redirect_and_login: 'Entre com seu email e senha!',
+  code_resent_succesfully: 'Código reenviado com sucesso!',
+  error_on_confirm_signup: 'Erro ao tentar confirmar',
 };

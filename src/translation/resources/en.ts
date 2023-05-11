@@ -32,7 +32,6 @@ export default {
   create_account: 'Create Your Account!!',
   name: 'Name',
   search: 'Search by word...',
-  check_you_email: 'Check your email!',
   sure_you_want_delete: 'Are you Sure you Want to Delete?',
 
   required_email: 'The email is required',
@@ -66,4 +65,6 @@ export default {
   expired_code: 'Invalid code provided, please request a code again.',
   code_mismatch: 'Invalid verification code provided, please try again.',
   redirect_and_login: 'Log In with your email and password!',
+  code_resent_succesfully: 'Code resent successfully!',
+  error_on_confirm_signup: 'Error confirming Sign Up',
 };
