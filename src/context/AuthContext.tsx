@@ -1,9 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import {
-  AuthenticationDetails,
-  CognitoUser,
-  CognitoUserSession,
-} from 'amazon-cognito-identity-js';
+import {CognitoUser, CognitoUserSession} from 'amazon-cognito-identity-js';
 import {useTranslation} from 'react-i18next';
 import {cognitoPool as Pool} from '../utils/cognito-pool';
 import {
@@ -14,7 +10,6 @@ import {
   User,
 } from './types/auth';
 import {
-  ACCESS_TOKEN,
   UNVERIFIED_ACCOUNT_EMAIL,
   removeData,
   retrieveData,
@@ -36,48 +31,15 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
    * @param password
    */
   const signIn = async ({email, password}: SignInProps) => {
-    return new Promise((resolve, reject) => {
-      const cognitoUser = new CognitoUser({Username: email, Pool});
-      setUser(cognitoUser as User);
-      const authDetails = new AuthenticationDetails({
-        Username: email,
-        Password: password,
-      });
-      cognitoUser.authenticateUser(authDetails, {
-        onSuccess: async response => {
-          const accessToken = response.getAccessToken().getJwtToken();
-          await storeData(ACCESS_TOKEN, accessToken);
-
-          resolve({
-            type: 'success',
-            message: 'Success',
-            response,
-          });
-        },
-
-        onFailure: err => {
-          switch (err.name) {
-            case 'NotAuthorizedException':
-              reject({
-                type: 'error',
-                message: t('not_authorized'),
-              });
-              break;
-            case 'UserNotConfirmedException':
-              reject({
-                type: 'error',
-                message: t('user_not_confirmed'),
-              });
-              break;
-            default:
-              reject({
-                type: 'error',
-                message: t('default_error'),
-              });
-          }
-        },
-      });
-    });
+    try {
+      const authenticatedUser = await Auth.signIn(email, password);
+      console.log('authenticatedUser', authenticatedUser);
+      setUser(authenticatedUser);
+      return {type: 'success'};
+    } catch (error) {
+      // TODO: handle ERRORS: NotAuthorizedException, UserNotConfirmedException and DEFAULT
+      return {type: 'error', message: t('error_on_signin')};
+    }
   };
 
   /**
