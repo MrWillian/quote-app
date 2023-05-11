@@ -26,15 +26,13 @@ export const SignIn = () => {
   }, [register]);
 
   const onSubmit = async (data: any) => {
-    await signIn(data)
-      .then(response => {
-        Alert.alert(t('success'), response.message);
-        reset({email: '', password: ''});
-        navigation.navigate('Dashboard');
-      })
-      .catch(error => {
-        Alert.alert(t('error'), error.message);
-      });
+    const result = await signIn(data);
+    if (result.type === 'success') {
+      Alert.alert(t('success'), result.message);
+      reset({email: '', password: ''});
+      navigation.navigate('Dashboard');
+    }
+    Alert.alert(t('error'), result.message);
   };
 
   return (
