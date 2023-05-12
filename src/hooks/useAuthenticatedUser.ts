@@ -1,9 +1,14 @@
 import {useCallback, useEffect} from 'react';
-import {cognitoPool} from '../utils/cognito-pool';
+import {Auth} from 'aws-amplify';
 
 const useAuthenticatedUser = () => {
-  const getAuthenticatedUser = useCallback(() => {
-    return cognitoPool.getCurrentUser();
+  const getAuthenticatedUser = useCallback(async () => {
+    try {
+      const currentSession = await Auth.currentSession();
+      return currentSession.getAccessToken();
+    } catch (err) {
+      return null;
+    }
   }, []);
 
   useEffect(() => {

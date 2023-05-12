@@ -1,8 +1,8 @@
 import useAuth from './useAuth';
 import {useNavigation} from '@react-navigation/native';
-import {mainScreenProp} from '../routes/MainStack';
 import {removeData} from '../utils/storage';
 import {ACCESS_TOKEN} from '../utils/types';
+import {mainScreenProp} from '../routes/types';
 
 const useLogout = () => {
   const {signOut} = useAuth();

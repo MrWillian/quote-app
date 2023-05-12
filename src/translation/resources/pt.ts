@@ -3,8 +3,8 @@ export default {
   hello: 'Ei, Olá!!',
   hey: 'Ei!!',
   look: 'Olhe!!',
-  this_should_help_you: 'Isso Deve Ajudá-lo a se Lembrar...!!',
-  write_something: 'Escreva Algo para se Lembrar...!!',
+  this_should_help_you: 'Isso Deve Ajudá-lo a se Lembrar...',
+  write_something: 'Escreva Algo para se Lembrar...',
   please_check_you_email: 'Por favor, verifique seu email!!',
   we_send_a_email: 'Nós enviamos um email para',
   you_receive_it: 'Você não recebeu?',
@@ -27,10 +27,12 @@ export default {
   register: 'Registrar',
   new_search: 'Nova Pesquisa',
   verify: 'Verificar',
+  cancel: 'Cancelar',
+  yes: 'Sim',
   create_account: 'Crie Sua Conta!!',
   name: 'Nome',
   search: 'Pesquise por palavra...',
-  check_you_email: 'Veja seu email!',
+  sure_you_want_delete: 'Tem certeza que Deseja Deletar?',
 
   required_email: 'O email é obrigatório!',
   valid_email: 'Digite um email válido',
@@ -48,4 +50,21 @@ export default {
   required_description: 'A descrição é obrigatória',
   minimum_characters_description:
     'A descrição deve conter pelo menos 5 caracteres',
+
+  not_authorized: 'Email ou Senha incorretos.',
+  user_not_confirmed: 'Por favor, confirme seu endereço de email.',
+  default_error:
+    'Oops! Algo aparece errado. Por favor, tente novamente mais tarde.',
+  invalid_parameter: 'Por favor, informe um email válido.',
+  invalid_password: 'Sua senha deverá conter pelo menos 8 caracteres.',
+  username_exists: 'Uma conta associada com este email já existe.',
+  confirmation_email:
+    'Um email de confirmação foi enviado para o seu. Por favor, verifique o código dentro dele.',
+  expired_code: 'Código inválido, por favor peça um código novamente.',
+  code_mismatch: 'Código inválido, por favor tente novamente.',
+  redirect_and_login: 'Entre com seu email e senha!',
+  code_resent_succesfully: 'Código reenviado com sucesso!',
+  error_on_confirm_signup: 'Erro ao tentar confirmar',
+  error_on_signin: 'Erro ao tentar entrar',
+  quotes_not_found: 'Não foram encontradas lembranças...',
 };

@@ -3,6 +3,11 @@ import {StatusBar} from 'react-native';
 import RootNavigator from './routes';
 import {AppProvider} from './context';
 import './translation';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import {Amplify, Auth} from 'aws-amplify';
+import awsconfig from './aws-exports';
+
+Amplify.configure(awsconfig);
 
 const App = () => {
   return (

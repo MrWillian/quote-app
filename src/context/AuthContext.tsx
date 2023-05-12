@@ -1,10 +1,6 @@
 import React, {useCallback, useState} from 'react';
-import {
-  AuthenticationDetails,
-  CognitoUser,
-  CognitoUserAttribute,
-  CognitoUserSession,
-} from 'amazon-cognito-identity-js';
+import {CognitoUser, CognitoUserSession} from 'amazon-cognito-identity-js';
+import {useTranslation} from 'react-i18next';
 import {cognitoPool as Pool} from '../utils/cognito-pool';
 import {
   AuthContext,
@@ -14,15 +10,16 @@ import {
   User,
 } from './types/auth';
 import {
-  ACCESS_TOKEN,
   UNVERIFIED_ACCOUNT_EMAIL,
   removeData,
   retrieveData,
   storeData,
 } from '../utils';
+import {Auth} from 'aws-amplify';
 
 export const AuthProvider = ({children}: IAuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
+  const {t} = useTranslation();
   const [unverifiedAccount, setUnverifiedAccount] = useState({
     email: '',
     password: '',
@@ -34,49 +31,15 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
    * @param password
    */
   const signIn = async ({email, password}: SignInProps) => {
-    return new Promise((resolve, reject) => {
-      const cognitoUser = new CognitoUser({Username: email, Pool});
-      setUser(cognitoUser as User);
-      const authDetails = new AuthenticationDetails({
-        Username: email,
-        Password: password,
-      });
-      cognitoUser.authenticateUser(authDetails, {
-        onSuccess: async response => {
-          const accessToken = response.getAccessToken().getJwtToken();
-          await storeData(ACCESS_TOKEN, accessToken);
-
-          resolve({
-            type: 'success',
-            message: 'Success',
-            response,
-          });
-        },
-
-        onFailure: err => {
-          switch (err.name) {
-            case 'NotAuthorizedException':
-              reject({
-                type: 'error',
-                message: 'Incorrect username or password.',
-              });
-              break;
-            case 'UserNotConfirmedException':
-              reject({
-                type: 'error',
-                message: 'Please confirm your email address.',
-              });
-              break;
-            default:
-              reject({
-                type: 'error',
-                message:
-                  'Oops! Looks like something went wrong. Please try again later.',
-              });
-          }
-        },
-      });
-    });
+    try {
+      const authenticatedUser = await Auth.signIn(email, password);
+      console.log('authenticatedUser', authenticatedUser);
+      setUser(authenticatedUser);
+      return {type: 'success'};
+    } catch (error) {
+      // TODO: handle ERRORS: NotAuthorizedException, UserNotConfirmedException and DEFAULT
+      return {type: 'error', message: t('error_on_signin')};
+    }
   };
 
   /**
@@ -85,66 +48,34 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
    * @param password
    * @param name
    */
-  const signUp = async ({email, password, name}: SignUpProps) => {
-    const userAttributes = [
-      new CognitoUserAttribute({
-        Name: 'given_name',
-        Value: name,
-      }),
-      new CognitoUserAttribute({
-        Name: 'email',
-        Value: email,
-      }),
-    ];
-
-    return new Promise((resolve, reject) => {
-      Pool.signUp(email, password, userAttributes, [], (err, data) => {
-        if (err) {
-          switch (err.name) {
-            case 'InvalidParameterException':
-              reject({
-                type: 'Error',
-                message: 'Please enter a valid email address.',
-              });
-              break;
-            case 'InvalidPasswordException':
-              reject({
-                type: 'Error',
-                message: 'Your password must be at least 6 characters long.',
-              });
-              break;
-            case 'UsernameExistsException':
-              reject({
-                type: 'Error',
-                message:
-                  'An account associated with this email address already exists.',
-              });
-              break;
-            default:
-              reject({
-                type: 'Error',
-                message:
-                  'Oops! Looks like something went wrong. Please try again later.',
-              });
-          }
-        }
-
-        setUnverifiedAccount({email, password});
-        storeUnverifiedAccount(email);
-
-        resolve({
-          type: 'Success',
-          data,
-          message:
-            'A confirmation email has been sent to your email address. Please check the code inside.',
-        });
+  const signUp = async ({email, password, givenName}: SignUpProps) => {
+    try {
+      const {user: authenticatedUser} = await Auth.signUp({
+        username: email,
+        password,
+        attributes: {
+          email,
+          given_name: givenName,
+        },
+        autoSignIn: {
+          enabled: true,
+        },
       });
-    });
-  };
-
-  const getUnverifiedAccount = async () => {
-    const email = await retrieveData(UNVERIFIED_ACCOUNT_EMAIL);
-    return email;
+      setUnverifiedAccount({email, password});
+      storeUnverifiedAccount(email);
+      return {
+        type: 'success',
+        authenticatedUser,
+        message: t('confirmation_email'),
+      };
+    } catch (error) {
+      console.log(error);
+      // TODO: Handle ERRORS: InvalidParameterException, InvalidPasswordException, UsernameExistsException and DEFAULT
+      return {
+        type: 'error',
+        message: '' + error,
+      };
+    }
   };
 
   const storeUnverifiedAccount = async (email: string) =>
@@ -173,90 +104,53 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
   );
 
   /**
-   * confirm account using code
+   * confirm account using code param
    * @param code
    * @returns {Promise<any>}
    */
-  const confirmAccount = async (code: string) => {
-    const storedEmail = await getUnverifiedAccount();
-    const email: string =
-      unverifiedAccount.email !== ''
-        ? unverifiedAccount?.email
-        : storedEmail !== null
-        ? storedEmail
-        : '';
-    const cognitoUser = new CognitoUser({
-      Username: email,
-      Pool: Pool,
-    });
-
-    return new Promise((resolve, reject) => {
-      cognitoUser.confirmRegistration(code, false, (error, result) => {
-        if (error) {
-          console.log('error', error);
-          switch (error.name) {
-            case 'ExpiredCodeException':
-              reject({
-                type: 'Error',
-                message: 'Invalid code provided, please request a code again.',
-              });
-              break;
-            case 'CodeMismatchException':
-              reject({
-                type: 'Error',
-                message:
-                  'Invalid verification code provided, please try again.',
-              });
-              break;
-            default:
-              reject({
-                type: 'Error',
-                message:
-                  'Oops! Looks like something went wrong. Please try again later.',
-              });
-          }
-        }
+  const confirmAccount = async (code: string): Promise<any> => {
+    const email = await getUnverifiedAccount();
+    try {
+      const result = await Auth.confirmSignUp(email, code);
+      if (result === 'SUCCESS') {
         clearUnverifiedAccountStore();
         if (unverifiedAccount) {
           signIn({
             email: unverifiedAccount?.email,
             password: unverifiedAccount?.password,
           });
-          resolve({
-            type: 'success',
-            result,
-          });
+          return {type: 'success'};
         } else {
-          resolve({
+          return {
             type: 'redirect',
-            result,
             message: 'Log In with your email and password!',
-          });
+          };
         }
-      });
-    });
+      }
+    } catch (error) {
+      // TODO: Handle ERRORS: ExpiredCodeException, CodeMismatchException, DEFAULT
+      return {
+        type: 'error',
+        message: t('error_on_confirm_signup'),
+      };
+    }
   };
 
   const resendConfirmationCode = async () => {
-    const storedEmail = await getUnverifiedAccount();
-    const email: string =
-      unverifiedAccount.email !== ''
-        ? unverifiedAccount?.email
-        : storedEmail !== null
-        ? storedEmail
-        : '';
-    const cognitoUser = new CognitoUser({
-      Username: email,
-      Pool: Pool,
-    });
-    return await new Promise((resolve, reject) => {
-      cognitoUser.resendConfirmationCode((error, result) => {
-        if (error) {
-          reject(error);
-        }
-        resolve(result);
-      });
-    });
+    const email = await getUnverifiedAccount();
+    try {
+      await Auth.resendSignUp(email);
+      return {
+        type: 'success',
+        message: t('code_resent_succesfully'),
+      };
+    } catch (error) {
+      console.error('resend error', error);
+      return {
+        type: 'error',
+        message: t('default_error'),
+      };
+    }
   };
 
   const forgotPassword = (resetEmail: string) => {
@@ -272,16 +166,24 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
     });
   };
 
-  /**
-   * logout user
-   */
   const signOut = async () => {
-    const currentUser = Pool.getCurrentUser();
-    if (currentUser) {
-      currentUser.signOut();
+    try {
+      await Auth.signOut();
       return true;
+    } catch (error) {
+      return false;
     }
-    return false;
+  };
+
+  const getUnverifiedAccount = async () => {
+    const storedEmail = await retrieveData(UNVERIFIED_ACCOUNT_EMAIL);
+    const email: string =
+      unverifiedAccount.email !== ''
+        ? unverifiedAccount?.email
+        : storedEmail !== null
+        ? storedEmail
+        : '';
+    return email;
   };
 
   const value = {

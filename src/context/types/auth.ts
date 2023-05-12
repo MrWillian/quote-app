@@ -6,7 +6,11 @@ export interface IAuthContextType {
   unverifiedAccount: {email: string; password: string};
   signIn: (p: {email: string; password: string}) => Promise<any>;
   signOut: () => Promise<any>;
-  signUp: (p: {name: string; email: string; password: string}) => Promise<any>;
+  signUp: (p: {
+    email: string;
+    password: string;
+    givenName: string;
+  }) => Promise<any>;
   confirmAccount: (code: string) => Promise<any>;
   resendConfirmationCode: () => Promise<any>;
   getSession: () => Promise<any>;
@@ -41,4 +45,4 @@ export type User = {
 
 export type SignInProps = {email: string; password: string};
 
-export type SignUpProps = {name: string} & SignInProps;
+export type SignUpProps = {givenName: string} & SignInProps;

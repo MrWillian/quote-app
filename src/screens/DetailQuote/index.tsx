@@ -13,7 +13,7 @@ import {
   Title,
 } from './style';
 import {useNavigation} from '@react-navigation/native';
-import {mainScreenProp} from '../../routes/MainStack';
+import {mainScreenProp} from '../../routes/types';
 import {Quote} from '../../utils/types';
 import useQuotes from '../../hooks/useQuotes';
 import {deleteQuote} from '../../lib/quotes/deleteQuote';
@@ -33,6 +33,20 @@ export const DetailQuote = () => {
   }, []);
 
   const handleDelete = async (id?: string | number[]) => {
+    Alert.alert(t('delete'), t('sure_you_want_delete') ?? '', [
+      {
+        text: t('cancel') ?? '',
+        onPress: () => null,
+        style: 'cancel',
+      },
+      {
+        text: t('yes') ?? '',
+        onPress: () => remove(id),
+      },
+    ]);
+  };
+
+  const remove = async (id?: string | number[]) => {
     const result = await deleteQuote(id);
     if (result.status === '200') {
       removeQuote(id);
