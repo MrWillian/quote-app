@@ -13,10 +13,12 @@ import useQuotes from '../../hooks/useQuotes';
 import {useNavigation} from '@react-navigation/native';
 import {mainScreenProp} from '../../routes/types';
 import {Quote} from '../../utils/types';
+import {useTranslation} from 'react-i18next';
 
 export const QuoteList = () => {
   const {quotes, listQuotes, selectQuote} = useQuotes();
   const navigation = useNavigation<mainScreenProp>();
+  const {t} = useTranslation();
 
   useEffect(() => {
     listQuotes();
@@ -45,7 +47,7 @@ export const QuoteList = () => {
           );
         })
       ) : (
-        <NotFoundLabel>Quotes not found...</NotFoundLabel>
+        <NotFoundLabel>{t('quotes_not_found')}</NotFoundLabel>
       )}
     </Container>
   );
