@@ -11,7 +11,8 @@ export const QuotesProvider = ({children}: IQuotesProviderProps) => {
   const [getAuthenticatedUser] = useAuthenticatedUser();
 
   const listQuotes = async () => {
-    const username = getAuthenticatedUser()?.getUsername() ?? '';
+    const session = await getAuthenticatedUser();
+    const username = session?.payload.username ?? '';
     await getQuotesList(username)
       .then(result => {
         if (result.data) {
@@ -27,7 +28,8 @@ export const QuotesProvider = ({children}: IQuotesProviderProps) => {
   };
 
   const getQuotes = async () => {
-    const username = getAuthenticatedUser()?.getUsername() ?? '';
+    const session = await getAuthenticatedUser();
+    const username = session?.payload.username ?? '';
     return await getQuotesList(username)
       .then(result => result.data.Items)
       .catch(error => {

@@ -4,7 +4,7 @@ import {Button, QuoteLogo, TextInput} from '../../components';
 import {Container, Form, Inputs, Title} from './style';
 import {useSignInForm} from './useSignInForm';
 import useAuth from '../../hooks/useAuth';
-import {mainScreenProp} from '../../routes/MainStack';
+import {mainScreenProp} from '../../routes/types';
 import {Alert} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
@@ -26,15 +26,14 @@ export const SignIn = () => {
   }, [register]);
 
   const onSubmit = async (data: any) => {
-    await signIn(data)
-      .then(response => {
-        Alert.alert(t('success'), response.message);
-        reset({email: '', password: ''});
-        navigation.navigate('Dashboard');
-      })
-      .catch(error => {
-        Alert.alert(t('error'), error.message);
-      });
+    const result = await signIn(data);
+    if (result.type === 'success') {
+      Alert.alert(t('success'), result.message);
+      reset({email: '', password: ''});
+      navigation.navigate('Dashboard');
+      return;
+    }
+    Alert.alert(t('error'), result.message);
   };
 
   return (
