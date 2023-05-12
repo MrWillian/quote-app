@@ -3,8 +3,8 @@ export default {
   hello: 'Hey, Hello!!',
   hey: 'Hey!!',
   look: 'Look!!',
-  this_should_help_you: 'This Should Help you Remember...!!',
-  write_something: 'Write Something to Remember...!!',
+  this_should_help_you: 'This Should Help you Remember...',
+  write_something: 'Write Something to Remember...',
   please_check_you_email: 'Please, check your email!!',
   we_send_a_email: 'We Send a Email to',
   you_receive_it: 'Did not you receive it?',
@@ -67,4 +67,6 @@ export default {
   redirect_and_login: 'Log In with your email and password!',
   code_resent_succesfully: 'Code resent successfully!',
   error_on_confirm_signup: 'Error confirming Sign Up',
+  error_on_signin: 'Error on Sign In',
+  quotes_not_found: 'Quotes not found...',
 };

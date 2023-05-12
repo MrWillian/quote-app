@@ -3,8 +3,8 @@ export default {
   hello: 'Ei, Olá!!',
   hey: 'Ei!!',
   look: 'Olhe!!',
-  this_should_help_you: 'Isso Deve Ajudá-lo a se Lembrar...!!',
-  write_something: 'Escreva Algo para se Lembrar...!!',
+  this_should_help_you: 'Isso Deve Ajudá-lo a se Lembrar...',
+  write_something: 'Escreva Algo para se Lembrar...',
   please_check_you_email: 'Por favor, verifique seu email!!',
   we_send_a_email: 'Nós enviamos um email para',
   you_receive_it: 'Você não recebeu?',
@@ -65,4 +65,6 @@ export default {
   redirect_and_login: 'Entre com seu email e senha!',
   code_resent_succesfully: 'Código reenviado com sucesso!',
   error_on_confirm_signup: 'Erro ao tentar confirmar',
+  error_on_signin: 'Erro ao tentar entrar',
+  quotes_not_found: 'Não foram encontradas lembranças...',
 };
