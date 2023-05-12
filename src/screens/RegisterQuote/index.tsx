@@ -5,11 +5,11 @@ import {registerQuote} from '../../lib/quotes/registerQuote';
 import {Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {mainScreenProp} from '../../routes/types';
-import {USER_ID} from '../../../env-vars';
 import {sanitizeQuoteDataToSave} from '../../utils';
 import {useRegisterQuoteForm} from './useRegisterQuoteForm';
 import useQuotes from '../../hooks/useQuotes';
 import {useTranslation} from 'react-i18next';
+import {useAuthenticatedUser} from '../../hooks';
 
 export const RegisterQuote = () => {
   const {
@@ -19,6 +19,7 @@ export const RegisterQuote = () => {
     formState: {isSubmitting, errors},
   } = useRegisterQuoteForm();
   const {addQuote} = useQuotes();
+  const [getAuthenticatedUser] = useAuthenticatedUser();
   const {t} = useTranslation();
   const navigation = useNavigation<mainScreenProp>();
 
@@ -29,7 +30,9 @@ export const RegisterQuote = () => {
 
   const onSubmit = async (fields: any) => {
     fields.date = new Date();
-    const data = sanitizeQuoteDataToSave(fields, USER_ID);
+    const session = await getAuthenticatedUser();
+    const userSub = session?.payload.sub;
+    const data = sanitizeQuoteDataToSave(fields, userSub);
     await registerQuote(data)
       .then(response => {
         Alert.alert(t('success'), response.data);
