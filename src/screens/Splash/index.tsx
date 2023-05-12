@@ -23,8 +23,12 @@ export const Splash = () => {
     handleCurrentUser();
   };
 
-  const handleCurrentUser = () => {
-    if (!getAuthenticatedUser()) {
+  const handleCurrentUser = async () => {
+    const session = await getAuthenticatedUser();
+    const payload = session?.payload;
+    if (payload) {
+      setTimeout(() => navigation.navigate('Dashboard'), 5000);
+    } else {
       setTimeout(() => navigation.navigate('SignIn'), 6000);
     }
   };
