@@ -31,6 +31,7 @@ export const SignIn = () => {
       Alert.alert(t('success'), result.message);
       reset({email: '', password: ''});
       navigation.navigate('Dashboard');
+      return;
     }
     Alert.alert(t('error'), result.message);
   };
