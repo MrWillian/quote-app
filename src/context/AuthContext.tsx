@@ -114,7 +114,7 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
       if (result === 'SUCCESS') {
         clearUnverifiedAccountStore();
         if (unverifiedAccount) {
-          signIn({
+          await signIn({
             email: unverifiedAccount?.email,
             password: unverifiedAccount?.password,
           });
