@@ -9,7 +9,9 @@ export const Container = styled.View`
   padding: 5px 10px;
 `;
 
-export const QuoteInfo = styled.View``;
+export const QuoteInfo = styled.View`
+  width: 90%;
+`;
 
 export const QuoteTitle = styled.Text`
   color: #fff;
