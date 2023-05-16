@@ -33,7 +33,6 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
   const signIn = async ({email, password}: SignInProps) => {
     try {
       const authenticatedUser = await Auth.signIn(email, password);
-      console.log('authenticatedUser', authenticatedUser);
       setUser(authenticatedUser);
       return {type: 'success'};
     } catch (error) {
@@ -115,7 +114,7 @@ export const AuthProvider = ({children}: IAuthProviderProps) => {
       if (result === 'SUCCESS') {
         clearUnverifiedAccountStore();
         if (unverifiedAccount) {
-          signIn({
+          await signIn({
             email: unverifiedAccount?.email,
             password: unverifiedAccount?.password,
           });

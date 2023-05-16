@@ -1,23 +1,13 @@
 import React, {useEffect} from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {
-  Container,
-  DetailButton,
-  QuoteItem,
-  QuoteDescription,
-  QuoteInfo,
-  QuoteTitle,
-  NotFoundLabel,
-} from './styles';
+import {Container, QuotesList, NotFoundLabel} from './styles';
 import useQuotes from '../../hooks/useQuotes';
-import {useNavigation} from '@react-navigation/native';
-import {mainScreenProp} from '../../routes/types';
-import {Quote} from '../../utils/types';
 import {useTranslation} from 'react-i18next';
+import QuoteItem from '../QuoteItem';
+import {Quote} from '../../utils';
+import {ListRenderItem} from 'react-native';
 
 export const QuoteList = () => {
-  const {quotes, listQuotes, selectQuote} = useQuotes();
-  const navigation = useNavigation<mainScreenProp>();
+  const {quotes, listQuotes} = useQuotes();
   const {t} = useTranslation();
 
   useEffect(() => {
@@ -25,30 +15,22 @@ export const QuoteList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleDetailQuote = (quote: Quote) => {
-    selectQuote(quote);
-    navigation.navigate('DetailQuote');
+  const renderItem: ListRenderItem<Quote> = ({item}) => (
+    <QuoteItem quote={item} />
+  );
+
+  const emptyItem = () => {
+    return <NotFoundLabel>{t('quotes_not_found')}</NotFoundLabel>;
   };
 
   return (
     <Container>
-      {quotes.length > 0 ? (
-        quotes.map(quote => {
-          return (
-            <QuoteItem key={quote.id}>
-              <QuoteInfo>
-                <QuoteTitle>{quote.title}</QuoteTitle>
-                <QuoteDescription>{quote.description}</QuoteDescription>
-              </QuoteInfo>
-              <DetailButton onPress={() => handleDetailQuote(quote)}>
-                <Icon name="arrow-circle-right" size={24} color="#fff" />
-              </DetailButton>
-            </QuoteItem>
-          );
-        })
-      ) : (
-        <NotFoundLabel>{t('quotes_not_found')}</NotFoundLabel>
-      )}
+      <QuotesList
+        data={quotes}
+        renderItem={renderItem}
+        keyExtractor={(item: Quote) => item.id}
+        ListEmptyComponent={emptyItem}
+      />
     </Container>
   );
 };
