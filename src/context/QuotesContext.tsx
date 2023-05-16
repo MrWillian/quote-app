@@ -11,9 +11,7 @@ export const QuotesProvider = ({children}: IQuotesProviderProps) => {
   const [getAuthenticatedUser] = useAuthenticatedUser();
 
   const listQuotes = async () => {
-    const session = await getAuthenticatedUser();
-    const username = session?.payload.username ?? '';
-    await getQuotesList(username)
+    await getQuotesList(await getUserId())
       .then(result => {
         if (result.data) {
           setQuotes(result.data.Items);
@@ -28,9 +26,7 @@ export const QuotesProvider = ({children}: IQuotesProviderProps) => {
   };
 
   const getQuotes = async () => {
-    const session = await getAuthenticatedUser();
-    const username = session?.payload.username ?? '';
-    return await getQuotesList(username)
+    return await getQuotesList(await getUserId())
       .then(result => result.data.Items)
       .catch(error => {
         return {
@@ -61,6 +57,12 @@ export const QuotesProvider = ({children}: IQuotesProviderProps) => {
   };
 
   const addQuote = quote => setQuotes(prev => [quote, ...prev]);
+
+  const getUserId = async () => {
+    const session = await getAuthenticatedUser();
+    const username = session?.payload.username ?? '';
+    return username;
+  };
 
   const value = {
     quotes,
