@@ -19,8 +19,12 @@ export const Splash = () => {
   }, []);
 
   const handleInitialChecks = async () => {
-    handleUnverifiedAccount();
-    handleCurrentUser();
+    const hasUnverifiedAccount = await getUnverifiedAccount();
+    if (hasUnverifiedAccount) {
+      setTimeout(() => navigation.navigate('ConfirmationCode'), 2000);
+    } else {
+      handleCurrentUser();
+    }
   };
 
   const handleCurrentUser = async () => {
@@ -33,11 +37,9 @@ export const Splash = () => {
     }
   };
 
-  const handleUnverifiedAccount = async () => {
+  const getUnverifiedAccount = async () => {
     const unverifiedAccountEmail = await retrieveData(UNVERIFIED_ACCOUNT_EMAIL);
-    if (unverifiedAccountEmail) {
-      setTimeout(() => navigation.navigate('ConfirmationCode'), 2000);
-    }
+    return unverifiedAccountEmail ? true : false;
   };
 
   return (

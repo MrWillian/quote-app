@@ -49,8 +49,10 @@ export const ConfirmationCode = () => {
     const result = await confirmAccount(code);
     if (result.type === 'success') {
       navigation.navigate('Dashboard');
+      return;
     } else if (result.type === 'redirect') {
       navigation.navigate('SignIn');
+      return;
     }
     setIsSubmitting(false);
     Alert.alert(t('error'), result.message);
