@@ -23,7 +23,7 @@ workflows:
                 ./gradlew assembleDebug
             - |
                 # build iOS
-                cd ios
+                cd ios && RCT_NEW_ARCH_ENABLED=1
                 pod install
                 xcodebuild build -workspace "$XCODE_WORKSPACE.xcworkspace" -scheme "$XCODE_SCHEME" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
         artifacts:
