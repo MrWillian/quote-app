@@ -1,2 +1,2 @@
 # quote-app
-App project from Quote App
+App project from Quote App.
