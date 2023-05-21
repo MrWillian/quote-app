@@ -1,4 +1,4 @@
-package com.quoteapp;
+package com.mrcode.quoteapp;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

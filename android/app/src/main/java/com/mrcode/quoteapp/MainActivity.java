@@ -1,4 +1,4 @@
-package com.quoteapp;
+package com.mrcode.quoteapp;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
