@@ -25,6 +25,7 @@ export const Input = styled.TextInput<ErrorProps>`
   font-size: 18px;
   font-family: 'NunitoSans';
   color: #5c5091;
+  font-weight: bold;
 
   ${({showBorder}) => (showBorder ? 'border: 1px solid red' : '')}
 `;
