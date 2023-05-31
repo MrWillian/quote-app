@@ -3,11 +3,13 @@ import {StatusBar} from 'react-native';
 import RootNavigator from './routes';
 import {AppProvider} from './context';
 import './translation';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import {Amplify, Auth} from 'aws-amplify';
+import {Amplify} from 'aws-amplify';
 import awsconfig from './aws-exports';
+import mobileAds from 'react-native-google-mobile-ads';
 
 Amplify.configure(awsconfig);
+
+mobileAds().initialize();
 
 const App = () => {
   return (
