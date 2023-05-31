@@ -21,6 +21,7 @@ export const Input = styled.TextInput<ErrorProps>`
   border-radius: 5px;
   width: 300px;
   font-size: 18px;
+  color: #5c5091;
 
   ${({showBorder}) => (showBorder ? 'border: 1px solid red' : '')}
 `;
