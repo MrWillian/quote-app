@@ -14,6 +14,8 @@ export const Label = styled.Text`
   font-weight: bold;
   font-size: 18px;
   letter-spacing: 2px;
+  font-family: 'NunitoSans';
+  font-weight: bold;
 `;
 
 export const Input = styled.TextInput<ErrorProps>`
@@ -21,6 +23,7 @@ export const Input = styled.TextInput<ErrorProps>`
   border-radius: 5px;
   width: 300px;
   font-size: 18px;
+  font-family: 'NunitoSans';
 
   ${({showBorder}) => (showBorder ? 'border: 1px solid red' : '')}
 `;

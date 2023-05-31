@@ -16,6 +16,7 @@ export const Title = styled.Text`
   font-size: 20px;
   text-transform: uppercase;
   letter-spacing: 4px;
+  font-family: 'NunitoSans';
 `;
 
 export const Subtitle = styled.Text`
@@ -25,6 +26,7 @@ export const Subtitle = styled.Text`
   text-transform: uppercase;
   letter-spacing: 3px;
   margin-top: 5px;
+  font-family: 'NunitoSans';
 `;
 
 export const Form = styled.View`

@@ -15,6 +15,7 @@ export const Title = styled.Text`
   text-transform: uppercase;
   letter-spacing: 4px;
   text-align: center;
+  font-family: 'NunitoSans';
 `;
 
 export const Subtitle = styled.Text`
@@ -24,6 +25,7 @@ export const Subtitle = styled.Text`
   letter-spacing: 3px;
   text-align: center;
   margin-top: 5px;
+  font-family: 'NunitoSans';
 `;
 
 export const EmailLabel = styled.Text`
@@ -33,6 +35,7 @@ export const EmailLabel = styled.Text`
   letter-spacing: 1px;
   text-align: center;
   margin-bottom: 20px;
+  font-family: 'NunitoSans';
 `;
 
 export const Form = styled.SafeAreaView`
@@ -50,6 +53,7 @@ export const ResendLabel = styled.Text`
   font-size: 18px;
   letter-spacing: 1px;
   text-align: center;
+  font-family: 'NunitoSans';
 `;
 
 export const ResendLinkContainer = styled.TouchableOpacity`
@@ -63,4 +67,5 @@ export const ResendLinkText = styled.Text`
   text-align: center;
   text-transform: uppercase;
   text-decoration: underline;
+  font-family: 'NunitoSans';
 `;

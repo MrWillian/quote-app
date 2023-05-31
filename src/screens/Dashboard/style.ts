@@ -20,10 +20,10 @@ export const Header = styled.View`
 export const Title = styled.Text`
   align-self: flex-start;
   color: #fff;
-  font-weight: bold;
   font-size: 20px;
   text-transform: uppercase;
   letter-spacing: 4px;
+  font-family: 'NunitoSans-Bold';
 `;
 
 export const Subtitle = styled.Text`
@@ -33,6 +33,7 @@ export const Subtitle = styled.Text`
   text-transform: uppercase;
   letter-spacing: 3px;
   margin-top: 5px;
+  font-family: 'NunitoSans';
 `;
 
 export const RegisterContainer = styled.View`
@@ -42,8 +43,8 @@ export const RegisterContainer = styled.View`
 
 export const RegisterLabel = styled.Text`
   text-align: center;
+  font-family: 'NunitoSans';
   color: #fff;
-  font-weight: bold;
   font-size: 20px;
   text-transform: uppercase;
   letter-spacing: 4px;
