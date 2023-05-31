@@ -10,6 +10,11 @@ import {useRegisterQuoteForm} from './useRegisterQuoteForm';
 import useQuotes from '../../hooks/useQuotes';
 import {useTranslation} from 'react-i18next';
 import {useAuthenticatedUser} from '../../hooks';
+import {BannerAd, BannerAdSize, TestIds} from 'react-native-google-mobile-ads';
+
+const adUnitId = __DEV__
+  ? TestIds.BANNER
+  : 'ca-app-pub-2147711301878242/2230970450';
 
 export const RegisterQuote = () => {
   const {
@@ -73,6 +78,13 @@ export const RegisterQuote = () => {
           isSubmitting={isSubmitting}
         />
       </Form>
+      <BannerAd
+        unitId={adUnitId}
+        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+        requestOptions={{
+          requestNonPersonalizedAdsOnly: true,
+        }}
+      />
     </Container>
   );
 };
