@@ -16,4 +16,5 @@ export const NotFoundLabel = styled.Text`
   font-size: 14px;
   color: #fff;
   margin: 5px;
+  font-family: 'NunitoSans';
 `;

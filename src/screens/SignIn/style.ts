@@ -9,10 +9,11 @@ export const Container = styled.View`
 
 export const Title = styled.Text`
   color: #fff;
-  font-weight: bold;
   font-size: 24px;
   text-transform: uppercase;
   letter-spacing: 8px;
+  font-family: 'NunitoSans';
+  font-weight: bold;
   text-align: center;
 `;
 
