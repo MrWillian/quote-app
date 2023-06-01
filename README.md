@@ -46,7 +46,7 @@ https://github.com/MrWillian/quote-app/assets/50757994/1835b2c5-7bb4-4504-a24d-1
 
 ## Authors
 
-Willian Marciel Soares dos Santos (Frontend Developer)
+Willian Marciel Soares dos Santos (Mobile Developer)
 
 - [Github](https://www.github.com/MrWillian)
 
