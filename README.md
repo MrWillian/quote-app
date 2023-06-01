@@ -41,10 +41,6 @@ https://github.com/MrWillian/quote-app/assets/50757994/1835b2c5-7bb4-4504-a24d-1
 * DynamoDB
 * Code Magic
 
-![](https://img.shields.io/badge/React_Query-FF4154?style=for-the-badge&logo=React_Query&logoColor=white)
-![](https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)
-![](https://img.shields.io/badge/Trello-0052CC?style=for-the-badge&logo=trello&logoColor=white)
-
 
 ## Authors
 
