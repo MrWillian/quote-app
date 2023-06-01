@@ -9,6 +9,7 @@ That's why the Quote App is here to solve your problems, because you'll have all
 In addition to the app, we have an online platform, so you can access from anywhere.
 
 [Play Store](https://play.google.com/store/apps/details?id=com.mrcode.quoteapp&pli=1)
+<br />
 [WEB](https://quote-remember.vercel.app/)
 
 ## Demo
