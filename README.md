@@ -1,5 +1,3 @@
-![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
-
 # Quote App - Application
 
 Who never forgot where they kept a key, a specific outfit, an item that made them lose their hair after looking everywhere? Be it at any age, we always forget where we put things for a variable time interval.
