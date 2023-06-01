@@ -17,6 +17,7 @@ export const Title = styled.Text`
   text-transform: uppercase;
   letter-spacing: 8px;
   text-align: center;
+  font-family: 'NunitoSans';
 `;
 
 export const Form = styled.SafeAreaView`

@@ -15,4 +15,5 @@ export const Label = styled.Text`
   color: #fff;
   text-transform: uppercase;
   font-weight: bold;
+  font-family: 'NunitoSans';
 `;

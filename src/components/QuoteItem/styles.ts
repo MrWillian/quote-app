@@ -17,10 +17,12 @@ export const QuoteTitle = styled.Text`
   color: #fff;
   font-size: 18px;
   font-weight: bold;
+  font-family: 'NunitoSans';
 `;
 
 export const QuoteDescription = styled.Text`
   color: #fff;
+  font-family: 'NunitoSans-Italic';
 `;
 
 export const DetailButton = styled.TouchableOpacity``;

@@ -61,6 +61,7 @@ export const SignIn = () => {
           style={{
             color: 'white',
             textDecorationLine: 'underline',
+            fontFamily: 'NunitoSans',
           }}
           to="/SignUp"
         >

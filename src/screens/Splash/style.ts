@@ -12,6 +12,8 @@ export const Title = styled.Text`
   font-weight: bold;
   font-size: 24px;
   text-transform: uppercase;
+  font-family: 'NunitoSans';
+  font-weight: bold;
   letter-spacing: 5px;
 `;
 

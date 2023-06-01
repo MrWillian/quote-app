@@ -17,6 +17,7 @@ export const SearchButton = styled.TouchableOpacity``;
 
 export const SearchInput = styled.TextInput`
   color: #fff;
+  font-family: 'NunitoSans';
   font-weight: bold;
   font-size: 16px;
   width: 80%;
