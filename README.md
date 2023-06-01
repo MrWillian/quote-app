@@ -31,7 +31,6 @@ https://github.com/MrWillian/quote-app/assets/50757994/1835b2c5-7bb4-4504-a24d-1
 
 * React Native
 * ContextApi
-* ReactQuery
 * ReactHookForm 
 * Jest
 * i18next
