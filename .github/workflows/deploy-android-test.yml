@@ -28,8 +28,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build android
+      - name: Set permissions to Build Assemble
         run: chmod +x gradlew
+
+      - name: Build android
         run: cd android && ./gradlew assembleRelease
 
       - name: Upload to App Center
