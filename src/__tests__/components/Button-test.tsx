@@ -5,12 +5,12 @@ import {Button} from '../../components';
 
 describe('Button', () => {
   it('renders the component', () => {
-    renderer.create(<Button label="Test" />);
+    renderer.create(<Button title="Test" />);
   });
 
   it('renders the correct text', () => {
     const value = 'Test';
-    const component = renderer.create(<Button label="Test" />);
-    expect(component.root.props.label).toEqual(value);
+    const component = renderer.create(<Button title="Test" />);
+    expect(component.root.props.title).toEqual(value);
   });
 });
