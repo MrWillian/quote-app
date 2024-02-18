@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, Alert, StyleSheet} from 'react-native';
 import {Button, QuoteLogo} from '../../components';
-import NextTextInput from 'react-native-next-input';
 import {
   Container,
   EmailLabel,
@@ -75,12 +74,12 @@ export const ConfirmationCode = () => {
       <Subtitle>{t('we_send_a_email')}</Subtitle>
       <EmailLabel>{unverifiedAccountEmail}</EmailLabel>
       <Form>
-        <NextTextInput
+        {/* <NextTextInput
           noOfTextInput={6}
           textInputStyle={styles.inputStyle}
           parentViewStyle={styles.parentInputStyle}
           onChangeValue={(_, value) => handleChange(value)}
-        />
+        /> */}
         <ResendContainer>
           <ResendLabel>{t('you_receive_it')}</ResendLabel>
           <ResendLinkContainer onPress={handleResendConfirmationCode}>
